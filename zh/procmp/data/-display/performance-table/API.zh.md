@@ -54,7 +54,7 @@ title: API
 | columnHideable | boolean`(true)` | 可调整列显示, customizable 为 true 才起作用 |      |
 | columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 | 1.4.3    |
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 | 1.4.3    |
-| customizable | boolean | 是否显示个性化设置入口按钮  |  | 1.4.3    |
+| customizable | boolean | 是否显示个性化设置入口按钮  | 1.4.3    |
 | customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： customizedSave customizedLoad | 1.4.3      |
 | rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowselection)  |
 | rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
@@ -63,7 +63,9 @@ title: API
 | onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
 | components |  [TableComponents](#tablecomponents) | 覆盖默认的 table 元素 |
-| useMouseBatchChoose`(1.6.7)` |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
+| useMouseBatchChoose`(1.6.7)` |  boolean [globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API) |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
+| customizedColumnProps | `Partial<HeaderCellProps>` | 个性化按钮所在列的表头单元格属性。个性化列仅有表头部分；className 和 isHeaderCell 由内部设置 | 1.6.9 |
+| headWordWrap | boolean | 表头单元格自动换行，不设置时跟随 wordWrap | 1.6.9 |
 
 ### Form methods
 
@@ -85,25 +87,26 @@ scrollLeft: (left: number) => void;
 
 ### Column
 
-| 属性名称      | 类型 `(默认值)`                                  | 描述                                                                                  |
-| ------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| align         | enum: 'left','center','right'                    | 对齐方式                                                                              |
-| colSpan       | number                                           | 合并列单元格，当被合并列的 dataKey 对应的值为 null 或者 undefined时，才会合并。 |
-| fixed         | boolean, 'left', 'right'                         | 固定列                                                                                |
-| flexGrow      | number                                           | 设置列宽自动调节，当设置了 flexGrow 就不能设置 resizable 与 width 属性          |
-| minWidth      | number`(200)`                                    | 当使用了 flexGrow 以后，可以通过 minWidth 设置一个最小宽度                        |
-| onResize      | (columnWidth?: number, dataKey?: string) => void | 列宽改变后的回调                                                                      |
-| resizable     | boolean                                          | 可自定义调整列宽                                                                      |
-| sortable      | boolean                                          | 可排序                                                                                |
-| treeCol       | boolean                                          | 指定列显示为 Tree                                                                     |
-| verticalAlign | enum: 'top', 'middle', 'bottom'                  | 垂直对齐方式                                                                          |
-| width         | number                                           | 列宽                                                                                  |
-| hidden         | boolean                                           | 隐藏                                                                                  |
-| hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
-| titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
-| onCell`(1.4.4)`	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
-| render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
-| footer`(1.6.7)`	| ({ data, dataIndex }) => ReactNode | 表格底部渲染内容	| 
+| 属性名称 | 类型 `(默认值)` | 描述 | 版本 |
+| ------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------- | --- |
+| align | enum: 'left','center','right' | 对齐方式 |  |
+| colSpan | number | 合并列单元格，当被合并列的 `dataKey` 对应的值为 `null` 或者 `undefined`时，才会合并；也可通过 `onCell` 返回 `colSpan` 按行配置。虚拟滚动下使用动态 `colSpan` 时，必须同时配置列级 `colSpan`，以关闭横向列虚拟化。 |  |
+| fixed | boolean, 'left', 'right' | 固定列 |  |
+| flexGrow | number | 设置列宽自动调节，当设置了 `flexGrow` 就不能设置 `width` 属性 |  |
+| minWidth | number`(200)` | 当使用了 flexGrow 以后，可以通过 minWidth 设置一个最小宽度 |  |
+| onResize | (columnWidth?: number, dataKey?: string) => void | 列宽改变后的回调 |  |
+| resizable | boolean | 可自定义调整列宽 |  |
+| sortable | boolean | 可排序 |  |
+| treeCol | boolean | 指定列显示为 Tree |  |
+| verticalAlign | enum: 'top', 'middle', 'bottom' | 垂直对齐方式 |  |
+| width | number | 列宽 |  |
+| hidden | boolean | 隐藏 |  |
+| hideable | boolean`(true)` | 是否可隐藏 |  |
+| titleEditable | boolean`(true)` | 个性化是否可编辑列头 |  |
+| onCell`(1.4.4)` | ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性 |  |
+| render | ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容 |  |
+| footer`(1.6.7)` | ({ data, dataIndex }) => ReactNode | 表格底部渲染内容 |  |
+| customizable | boolean, 'left', 'right', 默认值为 `true` | 该列是否受到个性化控制，设为 `false` `left` `right` 时，该列不展示在个性化配置面板中，并始终处于列分组的边缘位置，如：所有左固定列的最左边或最右边 | 1.6.9 |
 
 > `sortable` 是用来定义该列是否可排序，但是根据什么 `key` 排序需要 在 `Cell` 设置一个 `dataKey`
 > 这里的排序是服务端排序，所以需要在 `<Table>` 的 `onSortColumn` 回调函数中处理逻辑，回调函数会返回 `sortColumn`, `sortType` 这两个值。
@@ -147,7 +150,7 @@ scrollLeft: (left: number) => void;
 | queryFormProps | FormProps         | 查询条表单属性                                    |
 | defaultExpanded | Boolean         | 是否默认展开                                    |
 | queryDataSet | DataSet         | 查询数据源                                   |
-| queryFields | React.ReactElement<any>[]         | 自定义查询字段组件或默认组件属性                                    |
+| queryFields | `React.ReactElement<any>[]`         | 自定义查询字段组件或默认组件属性                                    |
 | queryFieldsLimit | ReactElement         | 显示的查询字段的数量                                    |
 | onQuery | (props: object) => void         | 查询回调                                    |
 | onReset | () => void         | 重置回调                                    |
@@ -166,11 +169,11 @@ scrollLeft: (left: number) => void;
 | hideDefaultSelections | 自定义选择项时去掉『全选』『反选』两个默认选项 | boolean | false |
 | selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string\[]\|number[] | \[] |
 | selections | 自定义选择项 [配置项](#selection), 设为 `true` 时使用默认选择项 | object\[]\|boolean | true |
-| type | 多选/单选，`checkbox` or `radio` | string | `checkbox` |  |
-| onChange | 选中项发生变化时的回调 | Function(selectedRowKeys, selectedRows) |  |  |
+| type | 多选/单选，`checkbox` or `radio` | string | `checkbox` |
+| onChange | 选中项发生变化时的回调 | Function(selectedRowKeys, selectedRows) |  |
 | onSelect | 用户手动选择/取消选择某行的回调 | Function(record, selected, selectedRows, nativeEvent) |  |
 | onSelectAll | 用户手动选择/取消选择所有行的回调 | Function(selected, selectedRows, changeRows) |  |
-| onSelectInvert | 用户手动选择反选的回调 | Function(selectedRows) |  |  |
+| onSelectInvert | 用户手动选择反选的回调 | Function(selectedRows) |  |
 
 > 使用请指明 rowKey。
 

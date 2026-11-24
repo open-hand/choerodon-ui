@@ -39,6 +39,11 @@ title: API
 | virtual | 支持虚拟滚动 | boolean| false | 1.6.7 |
 | showInputPrompt | 可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  | 1.6.8 |
 | addNewOptionPrompt | 自定义新增选项功能: 传入 path(根据addNewOptionPromptRender渲染) 或者 完全自定义渲染; | [AddNewOptionPromptResultProps](#AddNewOptionPromptResultProps) \| ((props: [AddNewOptionPromptRenderProps](#AddNewOptionPromptRenderProps)) => (ReactNode \| AddNewOptionPromptResultProps)) |  | 1.6.8 |
+| beforeCreateComboOption | 创建复合输入值前的回调，返回 `true` 允许创建，返回 `false` 阻止创建 | (props: { text: string; options: DataSet; textField: string; valueField: string; }) => boolean | - | 1.6.9 |
+| autoScrollToSelected | 自动滚动到选中位置 | boolean | true | 1.6.9 |
+| duplicateKey | 重复 `valueField` 处理的配置对象；也可通过全局 hook 按组件名配置。`disable` 禁用所有同值记录，`showWarning` 控制界面提示。默认仅提示，不禁用；任一开关开启且检测到重复值时会输出控制台警告 | { disable?: boolean; showWarning?: boolean } | [globalConfig.duplicateKey](/zh/procmp/configure/configure#api)，初始为 `{ disable: false, showWarning: true }` | 1.6.9 |
+| popupMainField | 下拉列表主字段，默认使用 `textField`。Select 中用于获取头像首字符，不改变选项文本；Lov popup 列表及树节点中同时用于展示主字段 | string | textField | 1.6.9 |
+| popupShowAvatar | 是否在下拉选项中显示主字段首字符头像，`'colorful'` 开启多色头像；Lov 树形下拉不展示头像 | boolean \| 'colorful' | false | 1.6.9 |
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。
 

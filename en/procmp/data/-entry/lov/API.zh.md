@@ -24,6 +24,8 @@ title: API
 | popupSearchMode | viewMode 为 popup 时，查询条件显示位置 | PopupSearchMode: 'single', 'multiple' | multiple | 1.5.7 |
 | showDetailWhenReadonly | 组件为 readOnly 或 disabled 时，可点击后缀查看选中项详情(需值集支持详情查询) | boolean |  | 1.6.6 |
 
+1.6.9：继承 [Select](/zh/procmp/data-entry/select/#API) 的 `duplicateKey`、`popupMainField` 和 `popupShowAvatar`。重复值默认提示而不禁用；需要禁用时显式设置 `duplicateKey={{ disable: true, showWarning: true }}`。`popupMainField` 决定 popup 列表和树节点的主文本；普通列表可用 `popupShowAvatar="colorful"` 显示多色头像，树形下拉不展示头像。
+
 ### selectionProps
 
 > 1.5.1 版本新增属性。

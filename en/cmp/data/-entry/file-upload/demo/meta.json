@@ -129,6 +129,20 @@
       "order": 8,
       "height": 205,
       "screenshot": ""
+    },
+    {
+      "filename": "viewMode.js",
+      "title": {
+        "zh": "展示模式",
+        "en": "View Mode"
+      },
+      "description": {
+        "zh": "通过 `viewMode` 设置上传列表的展示模式，通过 `listType` 设置上传列表样式。1.6.9。\n",
+        "en": "Set the upload list display mode with `viewMode` and its style with `listType`. 1.6.9.\n"
+      },
+      "order": 9,
+      "height": 360,
+      "screenshot": ""
     }
   ]
 }

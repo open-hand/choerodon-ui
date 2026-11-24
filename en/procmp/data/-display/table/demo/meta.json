@@ -565,6 +565,21 @@
       "screenshot": "",
       "height": 680,
       "category": "pro"
+    },
+    {
+      "filename": "duplicate-primary-key.js",
+      "title": {
+        "zh": "重复主键复现",
+        "en": "Duplicate Primary Key Reproduction"
+      },
+      "description": {
+        "zh": "同一当前页包含两条 `primaryKey='id'` 相同的不同记录。本示例通过 duplicateKey.disable 显式禁用重复记录，并在首个非内置列显示提示，同时控制台输出警告。本示例刻意保留原始主键和重复数据，仅用于复现。\n\n1.6.9。",
+        "en": "The current page contains two different records with the same `primaryKey='id'`. Duplicate records are explicitly disabled via duplicateKey.disable, with a hint shown in the first non-built-in column and a warning output to the console. The original keys and duplicate data are intentionally preserved for reproduction only.\n\n1.6.9."
+      },
+      "order": 100,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
     }
   ]
 }

@@ -2,32 +2,33 @@
 title: API
 ---
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| ----------- | -------------------- | ------------ | ---------------------------------------------- |
-| aspect      | 裁切区域宽高比， width / height                |  number              |  1 / 1       |
-| shape       | 裁切区域形状， 'rect'  或  'round'             |  string              |  'rect'      |
-| grid        | 显示裁切区域网格（九宫格）                     |  boolean             |  false       |
-| zoom        | 启用图片缩放                                   |  boolean             |  true        |
-| rotate      | 启用图片旋转                                   |  boolean             |  false       |
-| rotateStep  | 每次旋转角度                                   |  number              | 90           |
-| beforeCrop  | 弹窗打开前调用，若返回  false ，弹框将不会打开 |  function            |              |
-| modalTitle  | 弹窗标题                                       |  string              |  '编辑图片'  |
-| modalWidth  | 弹窗宽度，像素值或百分比                       |  number  \|  string  |  520         |
-| modalOk     | 弹窗确定按钮文字                               |  string              |  '确定'      |
-| modalCancel | 弹窗取消按钮文字                               |  string              |  '取消'      |
-| onCancel   | 取消模态框触发 |  onCancel?: () => void           |                |
-| onOk  | 点击模态框确定触发 |  { url: string, blob: Blob,area:Area }=> void          |                |
-| modalVisible   |  控制模态框的展示 |  boolean          |  ture               |
-| serverCrop   | 服务端裁剪 |  boolean          |  false            |
-| onCropComplete   | 裁剪完毕触发方法 |({ url: string, blob: Blob, area: Area }) => void        |            |
-| cropContent   | 修改裁剪编辑位置的渲染 | (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>      |            |
-| modalProps   | modal 的属性配置不可以更改onOk，onCancel | ModalProps     |            |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
+| ----------- | -------------------- | ------------ | ---------------------------------------------- | --- |
+| aspect | 裁切区域宽高比， width / height。 当设置为带'/'字符串格式时, 将回显到宽高比输入框中(例如: '1/1') | number \| string | 1 / 1 | 1.6.9 |
+| shape       | 裁切区域形状， 'rect'  或  'round'             |  string              |  'rect'      | |
+| grid        | 显示裁切区域网格（九宫格）                     |  boolean             |  false       | |
+| zoom        | 启用图片缩放                                   |  boolean             |  true        | |
+| rotate      | 启用图片旋转                                   |  boolean             |  false       | |
+| rotateStep  | 每次旋转角度                                   |  number              | 90           | |
+| beforeCrop  | 弹窗打开前调用，若返回  false ，弹框将不会打开 |  function            |              | |
+| modalTitle  | 弹窗标题                                       |  string              |  '编辑图片'  | |
+| modalWidth  | 弹窗宽度，像素值或百分比                       |  number  \|  string  |  520         | |
+| modalOk     | 弹窗确定按钮文字                               |  string              |  '确定'      | |
+| modalCancel | 弹窗取消按钮文字                               |  string              |  '取消'      | |
+| onCancel   | 取消模态框触发 |  onCancel?: () => void           |                | |
+| onOk  | 点击模态框确定触发 |  { url: string, blob: Blob,area:Area }=> void          |                | |
+| modalVisible   |  控制模态框的展示 |  boolean          |  ture               | |
+| serverCrop   | 服务端裁剪 |  boolean          |  false            | |
+| onCropComplete   | 裁剪完毕触发方法 |({ url: string, blob: Blob, area: Area }) => void        |            | |
+| cropContent   | 修改裁剪编辑位置的渲染 | (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>      |            | |
+| modalProps   | modal 的属性配置不可以更改onOk，onCancel | ModalProps     |            | |
+| showAspectInput | 显示宽高比输入框, 可自定义调整裁切区域宽高比 | boolean |  | 1.6.9 |
 
 ### ImgCrop.AvatarUploader 
 
 这个组件可以完成对于头像上传的裁剪的场景需求，主要是增加预览效果集成
 
-| 属性名 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- |
 | visible | 上传图片模态框的显示状态| boolean | false |
 | onClose | 模态框关闭时的回调|   (visible: boolean) => void;  |   |

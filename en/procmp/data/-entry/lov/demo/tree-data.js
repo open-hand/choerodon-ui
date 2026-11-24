@@ -54,6 +54,12 @@ class App extends React.Component {
           showCheckedStrategy={showCheckedStrategy}
         />
         <Lov dataSet={this.ds} name="code" />
+        <Lov
+          dataSet={this.ds2}
+          name="code"
+          showCheckedStrategy={showCheckedStrategy}
+          viewMode="popup"
+        />
       </Form>
     );
   }

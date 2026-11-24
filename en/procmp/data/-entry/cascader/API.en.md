@@ -22,6 +22,7 @@ title: API
 | async                    | Used to asynchronously load options from data source; cannot be used with showSearch                                                                                         | boolean                                                            |        | 1.4.4 |
 | optionRenderer(1.5.6)    | Hook to render Option content; isFilterSearch indicates whether filtering during search                                                                                      | ({ text, value, record, dataSet, isFilterSearch }) => ReactNode    |        |     |
 | checkable | Whether to display check boxes in multi-select mode (asynchronous is not supported), please note: when batch checking, the onChoose/onUnChoose parameters are arrays | boolean |  | 1.6.8 |
+| childrenPaging | Enable asynchronous child-node pagination together with async. When bound to a DataSet, set the options DataSet paging to 'server'. | boolean | - | 1.6.9 |
 
 `menuMode` is `single`; additional configurations:
 

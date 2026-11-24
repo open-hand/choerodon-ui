@@ -53,7 +53,7 @@ title: API
 | columnHideable | boolean`(true)` | Adjustable column display, only works when customizable is true |  |
 | columnTitleEditable | boolean | Editable column title, only works when customizable is true | 1.4.3  |
 | columnDraggable| boolean `(false)`  | Column draggable, only works when customizable is true | 1.4.3  |
-| customizable | boolean | Whether to display the personalized setting entry button  |  | 1.4.3  |
+| customizable | boolean | Whether to display the personalized setting entry button  | 1.4.3  |
 | customizedCode |string | Personalized code. After setting, the personalized settings such as column dragging will be stored in localStorage by default. If you want to store it in the backend, please rewrite the table personalized hooks in the global configuration: `customizedSave` `customizedLoad` | 1.4.3   |
 | rowSelection`(1.4.4)` | object | Whether table rows are selectable, [Configuration](#rowselection)  | 
 | rowDraggable`(1.4.4)` | boolean `(false)` | Row draggable, implement row dragging  |
@@ -61,8 +61,10 @@ title: API
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | Trigger event after dragging is completed |
 | onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | Trigger event before dragging is completed |
 | onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | Trigger event before dragging |
-| components |  [TableComponents](#tablecomponents) | Override default table elements | 1.6.5 ｜
-| useMouseBatchChoose`(1.6.7)` |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` | Whether to use mouse batch selection. When enabled, mouse drag batch selection can be performed in the case of rowbox. Press at the starting rowbox and release at the ending position |
+| components |  [TableComponents](#tablecomponents) | Override default table elements | 1.6.5 |
+| useMouseBatchChoose`(1.6.7)` |  boolean [globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API) | Whether to use mouse batch selection. When enabled, mouse drag batch selection can be performed in the case of rowbox. Press at the starting rowbox and release at the ending position |
+| customizedColumnProps | `Partial<HeaderCellProps>` | Header cell properties for the column containing the customization button. This column only has a header; className and isHeaderCell are set internally. | 1.6.9 |
+| headWordWrap | boolean | Whether the header cell wraps automatically, default is `wordWrap` | 1.6.9 |
 
 ### Form methods
 
@@ -84,25 +86,26 @@ scrollLeft: (left: number) => void;
 
 ### Column
 
-| Property      | Type `(Default)`                                 | Description                                                                                                 |
-| ------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
-| align         | enum: 'left','center','right'                    | Alignment                                                                                                   |
-| colSpan       | number                                           | Merges column cells to merge when the `dataKey` value for the merged column is `null` or `undefined`.       |
-| fixed         | boolean, 'left', 'right'                         | Fixed column                                                                                                |
-| flexGrow      | number                                           | Set the column width automatically adjusts, when set `flexGrow` cannot set `resizable` and `width` property |
-| minWidth      | number`(200)`                                    | When you use `flexGrow`, you can set a minimum width by `minwidth`                                          |
-| onResize      | (columnWidth?: number, dataKey?: string) => void | Callback after column width change                                                                          |
-| resizable     | boolean                                          | Customizable Resize Column width                                                                            |
-| sortable      | boolean                                          | Sortable                                                                                                    |
-| treeCol       | boolean                                          | A column of a tree.                                                                                         |
-| verticalAlign | enum: 'top', 'middle', 'bottom'                  | Vertical alignment                                                                                          |
-| width         | number                                           | Column width                                                                                                |
-| hidden         | boolean                                           | Hidden                                                                                  |
-| hideable         | boolean`(true)`                                       | Whether it is hideable                                                                                  |
-| titleEditable         | boolean`(true)`                                       | Whether the column header is editable in personalization                                                                                |
-| onCell`(1.4.4)` 	| ({ rowData, dataIndex, rowIndex }) => object | Set cell properties	| 
-| render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | Override render cell content	| 
-| footer`(1.6.7)`	| ({ data, dataIndex }) => ReactNode | Table footer render content	| 
+| Property | Type `(Default)` | Description | Version |
+| ------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- | --- |
+| align | enum: 'left','center','right' | Alignment |  |
+| colSpan | number | Merges column cells when the `dataKey` value for the merged column is `null` or `undefined`; can also be returned from `onCell` for row-specific configuration. When using dynamic `colSpan` with virtual scrolling, configure a column-level `colSpan` as well to disable horizontal column virtualization. |  |
+| fixed | boolean, 'left', 'right' | Fixed column |  |
+| flexGrow | number | Set the column width automatically adjusts, when set `flexGrow` cannot set `width` property |  |
+| minWidth | number`(200)` | When you use `flexGrow`, you can set a minimum width by `minwidth` |  |
+| onResize | (columnWidth?: number, dataKey?: string) => void | Callback after column width change |  |
+| resizable | boolean | Customizable Resize Column width |  |
+| sortable | boolean | Sortable |  |
+| treeCol | boolean | A column of a tree. |  |
+| verticalAlign | enum: 'top', 'middle', 'bottom' | Vertical alignment |  |
+| width | number | Column width |  |
+| hidden | boolean | Hidden |  |
+| hideable | boolean`(true)` | Whether it is hideable |  |
+| titleEditable | boolean`(true)` | Whether the column header is editable in personalization |  |
+| onCell`(1.4.4)` | ({ rowData, dataIndex, rowIndex }) => object | Set cell properties |  |
+| render | ({ rowData, dataIndex, rowIndex }) => ReactNode | Override render cell content |  |
+| footer`(1.6.7)` | ({ data, dataIndex }) => ReactNode | Table footer render content |  |
+| customizable | boolean, 'left', 'right', The default value is `true` | Whether this column is subject to personalization control. When set to `false`, `left`, or `right`, this column will not be displayed in the personalization configuration panel and will always be at the edge of the column group, for example: at the far left of all left-fixed columns or the far right. | 1.6.9 |
 
 > `sortable` is used to define whether the column is sortable, but depending on what `key` sort needs to set a `dataKey` in `Cell`.
 > The sort here is the service-side sort, so you need to handle the logic in the ' Onsortcolumn ' callback function of `<Table>`, and the callback function returns `sortColumn`, `sortType` values.
@@ -144,7 +147,7 @@ scrollLeft: (left: number) => void;
 | queryFormProps | FormProps         | Query bar form properties                                    |
 | defaultExpanded | Boolean         | Whether to expand by default                                    |
 | queryDataSet | DataSet         | Query DataSet                                   |
-| queryFields | React.ReactElement<any>[]         | Custom query field component or default component properties                                    |
+| queryFields | `React.ReactElement<any>[]`         | Custom query field component or default component properties                                    |
 | queryFieldsLimit | ReactElement         | Number of displayed query fields                                    |
 | onQuery | (props: object) => void         | Query callback                                    |
 | onReset | () => void         | Reset callback                                    |
@@ -163,11 +166,11 @@ Configuration of selection function, please specify rowKey when using.
 | hideDefaultSelections | Remove the two default options of "Select All" and "Invert Selection" when customizing selection items | boolean | false |
 | selectedRowKeys | Specify the key array of the selected item, which needs to be used with onChange | string\[]\|number[] | \[] |
 | selections | Custom selection items [Configuration](#selection), use default selection items when set to true | object\[]\|boolean | true |
-| type | Multiple/Single selection, checkbox or radio | string | `checkbox` |  |
-| onChange | Callback when selected items change | Function(selectedRowKeys, selectedRows) |  |  |
+| type | Multiple/Single selection, checkbox or radio | string | `checkbox` |
+| onChange | Callback when selected items change | Function(selectedRowKeys, selectedRows) |  |
 | onSelect | Callback for user manually selecting/deselecting a row | Function(record, selected, selectedRows, nativeEvent) |  |
 | onSelectAll | Callback for user manually selecting/deselecting all rows | Function(selected, selectedRows, changeRows) |  |
-| onSelectInvert | Callback for user manually selecting invert selection | Function(selectedRows) |  |  |
+| onSelectInvert | Callback for user manually selecting invert selection | Function(selectedRows) |  |
 
 > Please specify rowKey when using.
 

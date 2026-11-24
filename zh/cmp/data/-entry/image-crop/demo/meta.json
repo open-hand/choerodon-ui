@@ -11,10 +11,11 @@
         "en": "Basic"
       },
       "description": {
-        "zh": "最简单的用法。\n",
-        "en": "The simplest usage.\n"
+        "zh": "通过字符串 aspect 回显宽高比，使用 showAspectInput 调整裁切比例。1.6.9。\n",
+        "en": "Use a string aspect to display the ratio and showAspectInput to adjust it. 1.6.9.\n"
       },
       "order": 0,
+      "height": 120,
       "screenshot": ""
     },
     {

@@ -84,8 +84,8 @@
         "en": "Tree Data"
       },
       "description": {
-        "zh": "树形数据, LovConfig 配置中需要有 treeFlag、parentIdField、idField， 如果配置无法辨别是否是树形， 可以给 tableProps 加上 mode: 'tree'，以及 dataSetProps 加上 parentField 和 idField。\n",
-        "en": "For tree data, the LovConfig configuration requires treeFlag, parentIdField, and idField. If the configuration cannot distinguish whether it is a tree, you can add mode:'tree' to tableProps, and add parentField and idField to dataSetProps.\n"
+        "zh": "树形数据, LovConfig 配置中需要有 treeFlag、parentIdField、idField， 如果配置无法辨别是否是树形， 可以给 tableProps 加上 mode: 'tree'，以及 dataSetProps 加上 parentField 和 idField。\n1.6.9 补充 viewMode='popup' 的多选树形示例，可切换 showCheckedStrategy；树形下拉不展示头像。\n",
+        "en": "For tree data, the LovConfig configuration requires treeFlag, parentIdField, and idField. If the configuration cannot distinguish whether it is a tree, you can add mode:'tree' to tableProps, and add parentField and idField to dataSetProps.\nIn 1.6.9, this example adds a multiple tree with viewMode='popup' and switchable showCheckedStrategy. Tree dropdowns do not display avatars.\n"
       },
       "order": 5,
       "screenshot": "",
@@ -135,6 +135,36 @@
       "order": 10,
       "screenshot": "",
       "height": 140,
+      "category": "pro"
+    },
+    {
+      "filename": "duplicate-value-field.js",
+      "title": {
+        "zh": "重复值复现",
+        "en": "Duplicate Value Reproduction"
+      },
+      "description": {
+        "zh": "打开多选 LOV，第一页包含两条 `code` 同为 `DUPLICATE` 的记录。本示例通过 duplicateKey.disable 显式禁用重复记录，并在首个非内置列显示提示，同时控制台输出警告。本示例仅用于复现，不建议业务数据使用重复值。\n\n1.6.9。",
+        "en": "Open the multiple LOV to see two records whose `code` is `DUPLICATE` on the first page. Duplicate records are explicitly disabled via duplicateKey.disable, with a hint shown in the first non-built-in column and a warning output to the console. This demo is only for reproduction; duplicate values are not recommended in business data.\n\n1.6.9."
+      },
+      "order": 11,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
+    },
+    {
+      "filename": "popup-avatar.js",
+      "title": {
+        "zh": "下拉头像",
+        "en": "popup avatar"
+      },
+      "description": {
+        "zh": "1.6.9：普通 popup 列表和 searchable 下拉支持主字段首字符头像，popupShowAvatar='colorful' 开启多色头像。popupMainField 同时决定 Lov popup 主文本；树形下拉不展示头像。\n",
+        "en": "In 1.6.9, regular popup lists and searchable dropdowns support avatars using the first character of the main field; popupShowAvatar='colorful' enables multicolored avatars. popupMainField also determines the primary text in Lov popups. Tree dropdowns do not display avatars.\n"
+      },
+      "order": 12,
+      "screenshot": "",
+      "height": 300,
       "category": "pro"
     }
   ]

@@ -87,7 +87,7 @@ title: API
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | | 1.3.1   |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | | 1.4.0   |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | | 1.4.0   |
-| cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
+| cellHighlightRenderer | 单元格高亮渲染器, 需要配置 highlight 属性。表格中为非行内编辑的 可编辑单元格 渲染 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  | 1.4.0 |
 | showHeader |	是否显示表头 |	boolean | true | 1.4.2 |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean | true | 1.4.4 |
 | onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | | 1.4.4 |
@@ -105,7 +105,7 @@ title: API
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度 | 'content' \| 'wrapper' | 'content' | 1.5.6 |
 | fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true | 1.5.6 |
-| clipboard | 配置 Table 是否可复制粘贴，仅支持普通列表下使用，数据分组、虚拟滚动等特殊场景暂不支持。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } | 1.6.4 |
+| clipboard | 配置 Table 是否可复制粘贴。参考[配置项](#clipboard)。Lov 字段可自定义批量查询 [lovQueryBatchAxiosConfig](/zh/procmp/dataset/dataset/#field-props) | Clipboard | { copy: false, paste: false } | 1.6.4 |
 | customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 | boolean | false | 1.6.4 |
 | selectionColumnProps | 行选择列属性扩展  | ColumnProps  |  | 1.6.4 |
 | rowNumberColumn | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
@@ -114,6 +114,7 @@ title: API
 | combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  | 1.6.7 |
 | addNewButton | 表格体内新增输入行按钮, 数据为空时代替 renderEmpty; 设置 pristine 时, 此属性无效 |	boolean |	 | 1.6.7 |
 | customizedColumnProps | 个性化列的自定义列属性, 设置时需要注意: 个性化列仅有header部分, 仅有部分属性生效 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.8 |
+| duplicateKey | 重复主键(primaryKey)处理的配置对象；也可通过全局 `duplicateKey` hook 按组件名配置。`disable` 控制是否禁用重复记录，`showWarning` 是否显示重复项提示 | { disable?: boolean; showWarning?: boolean } | [globalConfig.duplicateKey](/zh/procmp/configure/configure#api) | 1.6.9 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -127,7 +128,7 @@ title: API
 | defaultWidth | 列的默认宽度  | number | [globalConfig.tableColumnDefaultWidth](/zh/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultWidth](/zh/procmp/configure/configure)  | 1.5.1 |
 | minWidth        | 最小列宽                                                                                                                                                                                          | number                                                                                                                             | [globalConfig.tableColumnDefaultMinWidth](/zh/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/zh/procmp/configure/configure)       |  |
 | title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |  |
-| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
+| header | 列头。可根据 renderPlacement 参数返回不同的元素。customizable - 个性化面板中渲染的列头; filter - 过滤条拉下列表中渲染的列头; default 或 空 - 表头等默认位置渲染的列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset/#group-values), aggregationTree: ReactElement[], renderPlacement?: HeaderRenderPlacement }) => ReactNode |  |  |
 | footer          | 列脚                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                          |           |  |
 | renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/zh/procmp/dataset/dataset#group-values), headerGroup: [Group](/zh/procmp/dataset/dataset#group-values),  aggregationTree: ReactElement[] }) => ReactNode                                                                             |           |  |
 | tagRenderer        | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className, inputBoxIsFocus, record(1.6.8), field(1.6.8) }: TagRendererProps) => ReactNode |  | 1.6.2 |
@@ -159,7 +160,7 @@ title: API
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |  |
 | aggregationTreeIndex | 聚合单元格中的列索引  | number | 0 | 1.5.2 |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  | |
-| highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
+| highlightRenderer | 单元格高亮渲染器, 需要配置 highlight 属性。表格中为非行内编辑的 可编辑单元格 渲染 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |  |
 | aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean |  | 1.5.1 |
 | sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  | 1.6.6 |
 | showDetail | editor 为 false 时, 是否可查看多语言详情。 true 为 hover 时显示icon; always 为一直显示icon | boolean \| `always` |  | 1.6.7 |
@@ -216,10 +217,10 @@ title: API
 | fuzzyQueryProps | 模糊查询输入框属性  | TextFieldProps |  | 1.6.6 |
 | filterQueryCallback | 筛选接口查询回调  | ({ dataSet })=> void |  | 1.6.6 |
 | autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5 |
-| refreshBtn | 刷新按钮 | boolean | true | 1.5.1 |
+| refreshBtn | 刷新按钮。fuzzyQueryOnly 为 true 时，默认不展示刷新按钮，可配置开启。 | boolean | true | 1.5.1 |
 | onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
 | onQuery | 查询回调 | () => void |  | 1.4.5 |
-| onReset | 重置回调 | () => void |  | 1.4.5 |
+| onReset | 重置回调，type 参数为 'clear' 表示是在清空模糊搜索框时被调用，为 undefined 表示是在重置查询条件时被调用 | (type?: 'clear') => void |  | 1.4.5 |
 | onRefresh | 刷新按钮回调，返回false \| Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | | 1.5.7 |
 | onFieldEnterDown | 字段回车回调 | ({ e, name, dataSet(1.6.8) }) => void  | | 1.6.4 |
 | showSingleLine | 筛选条是否单行显示 | boolean |  | 1.6.5 |
@@ -246,7 +247,7 @@ title: API
 | formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } | 1.4.4 |
 | onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
 | onQuery | 查询回调 | () => void |  |
-| onReset | 重置回调 | () => void |  |
+| onReset | 重置回调，type 参数为 'clear' 表示是在清空模糊搜索框时被调用，为 undefined 表示是在重置查询条件时被调用 | (type?: 'clear') => void |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

@@ -53,11 +53,11 @@
         "en": "Use in Form"
       },
       "description": {
-        "zh": "表单绑定数据源，与其他字段混合使用。\n",
-        "en": "Use with other `FormField`s in a `Form` with `DataSet`.\n"
+        "zh": "表单绑定数据源，与其他字段混合使用。\n1.6.9 新增 percentage 字段类型展示，1.2 显示为 120%。\n",
+        "en": "Use with other `FormField`s in a `Form` with `DataSet`.\nThe percentage field display is added in 1.6.9: 1.2 is displayed as 120%.\n"
       },
       "order": 3,
-      "height": 500,
+      "height": 520,
       "screenshot": "",
       "category": "pro"
     },

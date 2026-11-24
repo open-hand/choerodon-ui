@@ -125,7 +125,7 @@ DataSet.
 | lastPage() | Locate to the last page. If paging is true and server, performs remote query |  | Promise&lt;any&gt; | |
 | prePage() | Locate to the previous page. If paging is true and server, performs remote query |  | Promise&lt;any&gt; |    |
 | nextPage() | Locate to the next page. If paging is true and server, performs remote query |  | Promise&lt;any&gt; |   |
-| [create(data, index)](/en/datasetapi/dataset-methods/create) | Create a record | data - record data object; index&lt;optional,default:dataSet.records.length&gt; - index position | Record | |
+| [create(data, index)](/en/datasetapi/dataset-methods/create) | Create a record. With childrenField configured, child records are created recursively; use Record.treeReduce() to traverse descendants. | data - record data object; index&lt;optional,default:dataSet.records.length&gt; - index position | Record |  |
 | [delete(records, confirmMessage: ReactNode \| ModalProps)](/en/datasetapi/dataset-methods/delete) | Delete records immediately | records - records or record group to delete; confirmMessage - custom prompt or modal props; when false, delete without confirmation |  |  |
 | [remove(records, forceRemove)](/en/datasetapi/dataset-methods/delete) | Temporarily delete records | records - records or record group to delete; forceRemove(1.5.1) - whether to force delete |  |
 | [deleteAll(confirmMessage: ReactNode \| ModalProps)](/en/datasetapi/dataset-methods/delete) | Delete all records immediately | confirmMessage - custom prompt or modal props; when false, delete without confirmation |  |   |
@@ -201,7 +201,7 @@ DataSet.
 | unSelectAllPage | Cancel cross-page select-all event | ({ dataSet }) =&gt; void | dataSet - dataset | Yes | 1.5.3 |
 | indexChange | Current record change event | ({ dataSet, record, previous }) =&gt; void | dataSet - dataset; record - new current record; previous - old current record | Yes | |
 | fieldChange | Field property change event | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | dataSet - dataset; record - record of field (DataSet fields have no record); name - field name; propsName - property name; value - new value; oldValue - old value | Yes |    |
-| create | Record create event | ({ dataSet, record }) =&gt; void | dataSet - dataset; record - created record | Yes |    |
+| create | Record creation event. With childrenField configured, child records are created recursively; use Record.treeReduce() to traverse descendants. | ({ dataSet, record }) =&gt; void | dataSet - dataset; record - created record | Yes |  |
 | remove | Record remove event | ({ dataSet, records }) =&gt; void | dataSet - dataset; records - removed records | Yes |  |
 | export | Export event; returning false prevents export | ({ dataSet, params, data }) =&gt; boolean | dataSet - dataset; params - query params; data - query data | Yes |    |
 | beforeRemove | Event before temporary deletion; returning false prevents temporary deletion | ({ dataSet, records }) =&gt; boolean | dataSet - dataset; records - record set | No | |
@@ -282,7 +282,7 @@ DataSet.
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
 | name | Field name | string |  |   |
-| [type](/en/datasetapi/field-props/type) | Field type; options: boolean \| number \| string \| date \| dateTime \| time \| week \| month \| quarter \| year \| email \| url \| intl \| object \| attachment \| json \| bigNumber(1.5.1) | string | auto |  |
+| [type](/en/datasetapi/field-props/type) | Field type; options: boolean \| number \| string \| date \| dateTime \| time \| week \| month \| quarter \| year \| email \| url \| intl \| object \| attachment \| json \| bigNumber(1.5.1) \| `percentage` | string | auto |  |
 | order | Sort type; supports single-field sorting. If multiple fields set order, the first field with order is used. Options: asc \| desc | string |  |    |
 | label | Field label | string \| ReactNode |  |    |
 | labelWidth | Field label width | number |  |   |
@@ -354,6 +354,7 @@ DataSet.
 | useLookupBatch | Whether to use batch lookup code query | (code: string, field?: Field) => boolean |  | 1.6.5 |
 | useLovDefineBatch | Whether to use batch LOV configuration query | (code: string, field?: Field) => boolean |  | 1.6.5 |
 | numberRoundMode | Number rounding mode; default is round-half-up | round \| ceil \| floor |  | 1.6.7  |
+| lovQueryBatchAxiosConfig | Custom batch query hook for Lov fields. Return an AxiosRequestConfig with the batch endpoint URL; texts are passed as request parameters. The response maps display text to record objects, for example { 'text1': { xxx: 'yyy' }, 'text2': { mmm: 'nnn' } }. | (props: { dataSet: DataSet; field: Field; texts: string[]; textField?: string; valueField?: string; lovPara?: object; }) => AxiosRequestConfig |  | 1.6.9 |
 
 ### Field Values
 

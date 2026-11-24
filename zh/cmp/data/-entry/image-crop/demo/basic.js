@@ -28,13 +28,12 @@ const Demo = () => {
         modalVisible={visable}
         onOk={hanleOk}
         onCancel={hanleCancel}
-        on
         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
         rotate
         zoom
         grid
-        aspect={12 / 13}
-        aspectControl
+        aspect="12 / 13"
+        showAspectInput
       />
     </>
   );

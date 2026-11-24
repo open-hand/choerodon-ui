@@ -319,6 +319,21 @@
       "screenshot": "",
       "height": 420,
       "category": "pro"
+    },
+    {
+      "filename": "row-span.js",
+      "title": {
+        "zh": "复杂行合并",
+        "en": "Complex row merge"
+      },
+      "description": {
+        "zh": "复杂行合并。\n\n1.6.9。",
+        "en": "Complex row merge\n\n1.6.9."
+      },
+      "order": 21,
+      "screenshot": "",
+      "height": 400,
+      "category": "pro"
     }
   ]
 }

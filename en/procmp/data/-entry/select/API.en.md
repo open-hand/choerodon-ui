@@ -39,6 +39,11 @@ title: API
 | virtual | Support virtual scrolling | boolean| false | 1.6.7 |
 | showInputPrompt | Whether to display input prompts in the drop-down box when input is available. When true or a string is returned, it will be displayed in the placeholder at the same time. | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  | 1.6.8 |
 | addNewOptionPrompt | Customized new option function: pass in path (rendered according to addNewOptionPromptRender) or completely customized rendering; | [AddNewOptionPromptResultProps](#AddNewOptionPromptResultProps) \| ((props: [AddNewOptionPromptRenderProps](#AddNewOptionPromptRenderProps)) => (ReactNode \| AddNewOptionPromptResultProps)) |  | 1.6.8 |
+| beforeCreateComboOption | Callback before creating combo options, returning `true` allows creation, returning `false` prevents creation | (props: { text: string; options: DataSet; textField: string; valueField: string; }) => boolean | - | 1.6.9 |
+| autoScrollToSelected | Automatically scroll to the selected option. | boolean | true | 1.6.9 |
+| duplicateKey | Configuration for duplicate `valueField` values; the global hook can configure it by component name. `disable` disables all records sharing a value; `showWarning` controls UI hints. By default, hints are shown without disabling records. When either flag is enabled, detected duplicates also produce a console warning | { disable?: boolean; showWarning?: boolean } | [globalConfig.duplicateKey](/en/procmp/configure/configure#api), initially `{ disable: false, showWarning: true }` | 1.6.9 |
+| popupMainField | Main field of dropdown options. Defaults to `textField`. In Select, its first character is used for the avatar without changing the option text; in Lov popup lists and tree nodes, it also determines the primary text displayed | string | textField | 1.6.9 |
+| popupShowAvatar | Whether to display an avatar using the first character of the main field in dropdown options; `'colorful'` enables multicolored avatars. Avatars are not displayed in Lov tree dropdowns | boolean \| 'colorful' | false | 1.6.9 |
 
 
 For more properties, please refer to [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField).

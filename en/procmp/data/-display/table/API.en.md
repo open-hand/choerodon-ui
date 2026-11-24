@@ -88,7 +88,7 @@ title: API
 | treeQueryExpanded | Under the tree structure, queryBar triggers query, automatically expands the tree structure  | boolean | | 1.3.1   |
 | aggregation | Whether it is an aggregation view, if there is personalization, the personalization configuration shall prevail  | boolean | | 1.4.0   |
 | onAggregationChange | Aggregation view change hook, triggered when personalized configuration changes  | (aggregation) => void | | 1.4.0   |
-| cellHighlightRenderer | Cell highlight renderer  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
+| cellHighlightRenderer | Cell highlight renderer. Requires highlight; renders editable cells outside inline editing. | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  | 1.4.0 |
 | showHeader |	Whether to display table header |	boolean |	true | 1.4.2 |
 | showRemovedRow |	Whether to display temporarily removed rows, grayed out by default |	boolean | true | 1.4.4 |
 | onColumnResize | Column width change callback event  | ({ column, width, index }) => void | | 1.4.4 |
@@ -105,7 +105,7 @@ title: API
 | autoValidationLocate | Validation failure automatic positioning. If the positioning of multiple components conflicts, you can turn off automatic positioning and manually call the focus method to position | boolean | true | 1.5.3 |
 | boxSizing | The scope of style height impact, default content, if specified as wrapper, the style height will include the height of the content before and after the table, and the table height will be automatically adjusted when the height changes | 'content' \| 'wrapper' | 'content' | 1.5.6 |
 | fullColumnWidth | Whether the last column width automatically fills the table when all columns have column widths and do not exceed the table width  | boolean | true | 1.5.6 |
-| clipboard | Configure whether the Table can copy and paste, only supported in common lists, data grouping, virtual scrolling and other special scenarios are not supported temporarily. Refer to [Configuration](#clipboard)  | Clipboard | { copy: false, paste: false } | 1.6.4 |
+| clipboard | Configure Table copy/paste; see [configuration](#clipboard). Lov fields support custom batch queries through [lovQueryBatchAxiosConfig](/en/procmp/dataset/dataset/#field-props). | Clipboard | { copy: false, paste: false } | 1.6.4 |
 | customDragDropContenxt | Whether to enable custom DragDropContenxt, generally used for custom react-beautiful-dnd DragDropContenxt to implement multi-table dragging | boolean | false | 1.6.4 |
 | selectionColumnProps | Row selection column property extension  | ColumnProps  |  | 1.6.4 |
 | rowNumberColumn | Row number column properties |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
@@ -114,6 +114,7 @@ title: API
 | combineSortConfig | Combined sorting configuration, default front-end and back-end sorting are enabled, showing sorting options; built-in front-end combined sorting function, if there is complex field sorting, please implement the sorting function yourself. currentDataSort: current page sorting (front-end sorting); allDataSort: all page sorting (back-end sorting); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  | 1.6.7 |
 | addNewButton | Add input row button in table body, replace renderEmpty when data is empty; invalid when pristine is set |	boolean |	 | 1.6.7 |
 | customizedColumnProps | Custom column attributes of personalized columns, please note when setting: Personalized columns only have the header part, and only some attributes are effective |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.8 |
+| duplicateKey | Configuration object for duplicate primary keys(primaryKey); it can also be configured by component name through the global `duplicateKey` hook. `disable` controls whether duplicate records are disabled, and `showWarning` determines whether to display a warning for duplicates | { disable?: boolean; showWarning?: boolean } | [globalConfig.duplicateKey](/en/procmp/configure/configure#api) | 1.6.9 |
 
 For more properties, please refer to [DataSetComponent](/en/procmp/abstract/ViewComponent#datasetcomponent).
 
@@ -127,7 +128,7 @@ For more properties, please refer to [DataSetComponent](/en/procmp/abstract/View
 | defaultWidth | Column default width  | number | [globalConfig.tableColumnDefaultWidth](/en/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultWidth](/en/procmp/configure/configure)  | 1.5.1 |
 | minWidth        | Minimum column width                                                                                                                                                                                          | number                                                                                                                             | [globalConfig.tableColumnDefaultMinWidth](/en/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/en/procmp/configure/configure)       |  |
 | title | Column header text, priority is higher than header, easy to edit when column header text is rendered by header hook | string |  |  |
-| header | Column header | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/en/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
+| header | Column header. renderPlacement distinguishes customizable (customization panel), filter (filter dropdown), and default or undefined (table header and other default placements). | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/en/procmp/dataset/dataset/#group-values), aggregationTree: ReactElement[], renderPlacement?: HeaderRenderPlacement }) => ReactNode |  |  |
 | footer          | Column footer                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                           |           |  |
 | renderer        | Cell rendering callback                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/en/procmp/dataset/dataset#group-values), headerGroup: [Group](/en/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[]  }) => ReactNode                                                                              |           |  |
 | tagRenderer        | Multi-value Tag renderer | ({ value, text, key, readOnly, invalid, disabled, onClose, className, inputBoxIsFocus, record(1.6.8), field(1.6.8) }: TagRendererProps) => ReactNode |  | 1.6.2 |
@@ -159,7 +160,7 @@ For more properties, please refer to [DataSetComponent](/en/procmp/abstract/View
 | aggregationDefaultExpandAll | Default expand all tree nodes under the aggregation column  | boolean |  |  |
 | aggregationTreeIndex | Column index in aggregation cell  | number | 0 | 1.5.2 |
 | hiddenInAggregation | Whether to hide under aggregation column  | boolean \| (record) => boolean |  | |
-| highlightRenderer | Cell highlight renderer | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
+| highlightRenderer | Cell highlight renderer. Requires highlight; renders editable cells outside inline editing. | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |  |
 | aggregationLimitDefaultExpanded | Whether items exceeding the aggregation limit are expanded by default  | boolean \| (record) => boolean | 1.5.1 |
 | sortableCallback | Callback function after sorting ends  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  | 1.6.6 |
 | showDetail | When editor is false, whether to view multi-language details. true displays icon when hovering; always displays icon always | boolean \| `always` |  | 1.6.7 |
@@ -216,10 +217,10 @@ For more properties, please refer to the hook parameters of `Table` `queryBar` p
 | fuzzyQueryProps | Fuzzy query input box properties  | TextFieldProps |  | 1.6.6 |
 | filterQueryCallback | Filter interface query callback  | ({ dataSet })=> void |  | 1.6.6 |
 | autoQuery | Whether to auto query when condition changes  | boolean | true |1.4.5 |
-| refreshBtn | Refresh button  | boolean | true | 1.5.1 |
+| refreshBtn | Refresh button. Hidden by default when fuzzyQueryOnly is true; explicitly enable it to show it. | boolean | true | 1.5.1 |
 | onBeforeQuery | Callback before query, return false to not query | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
 | onQuery | Query callback | () => void |  | 1.4.5 |
-| onReset | Reset callback | () => void |  | 1.4.5 |
+| onReset | Reset callback, the type parameter being 'clear' indicates it is called when clearing the fuzzy search box, and being undefined indicates it is called when resetting the query conditions. | (type?: 'clear') => void |  | 1.4.5 |
 | onRefresh | Refresh button callback, return false \| Promise.resolve(false) or Promise.reject() will not refresh query, otherwise auto query | () => Promise&lt;boolean&gt; | | 1.5.7 |
 | onFieldEnterDown | Field Enter callback | ({ e, name, dataSet(1.6.8) }) => void  | | 1.6.4 |
 | showSingleLine | Whether the filter bar is displayed in a single line | boolean |  | 1.6.5 |
@@ -246,7 +247,7 @@ For more properties, please refer to the hook parameters of `Table` `queryBar` p
 | formProps | Query bar form properties | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } | 1.4.4 |
 | onBeforeQuery | Callback before query, return false to not query | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
 | onQuery | Query callback | () => void |  |
-| onReset | Reset callback | () => void |  |
+| onReset | Reset callback, the type parameter being 'clear' indicates it is called when clearing the fuzzy search box, and being undefined indicates it is called when resetting the query conditions. | (type?: 'clear') => void |  |
 
 
 ### pagination

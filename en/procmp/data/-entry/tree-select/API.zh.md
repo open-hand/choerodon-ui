@@ -15,8 +15,37 @@ title: API
 | showLine | 是否展示连接线 | boolean \| {showLeafIcon: boolean} | false | 1.6.7 |
 | async | 异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |  |
 | loadData | 异步加载数据 | function(node) | - |  |
+| optionRenderer | 渲染 Tree 节点文本的钩子（不同于 Select：参数为 `{ dataSet, record, text }`，无 `value`） | ({ dataSet, record, text }) => ReactNode | ({ text }) => text | 1.6.9 |
+| onOption | 设置 TreeNode 节点的属性，详见下方"关于 onOption 与 Tree 节点属性"（不同于 Select：返回值会合并到 Tree 节点，而非 Select.Option） | ({ dataSet, record }) => TreeNodeProps | - | 1.6.9 |
+| dropdownMenuStyle | 下拉框样式，会作为内联 style 作用于内部 Tree 组件（不同于 Select：作用于 Menu） | object |  | 1.6.9 |
 
-更多属性请参考  [Select](/zh/procmp/data-entry/select/#Select)。
+#### 继承自 Select 的属性
+
+下列继承自 Select 的属性在 TreeSelect 中不生效：`selectAllButton`、`scrollLoad`、`virtual`、`optionTooltip`、`groupRenderer`、`defaultActiveFirstOption`、`reverse`。
+
+其他具体属性描述请参考 [Select](/zh/procmp/data-entry/select/#Select)。
+
+> 说明：在 TreeSelect 中，`searchable` 开启搜索时会自动展开所有匹配节点的祖先节点。
+
+#### 关于 onOption 与 Tree 节点属性
+
+TreeSelect 内部使用 [Tree](/zh/cmp/data-display/tree/#Tree) 组件渲染下拉树，通过 `onOption({ dataSet, record })` 返回的对象会作为 TreeNode 的属性合并到对应节点上。可返回的 TreeNode 相关属性包括：
+
+| 参数 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| disabled | 是否禁用节点（禁用后不可选中、不可勾选） | boolean | 1.6.9 |
+| disableCheckbox | 禁掉 checkbox（仅 treeCheckable 时生效） | boolean | 1.6.9 |
+| isLeaf | 是否为叶子节点。启用 async 或 loadData 时默认不推断叶子状态，仍可通过 onOption 显式设置 | boolean | 1.6.9 |
+| checkable | 当前节点是否显示 checkbox | boolean | 1.6.9 |
+| icon | 节点图标 | ReactNode \| (props) => ReactNode | 1.6.9 |
+| switcherIcon | 节点展开/折叠的切换图标 | ReactNode \| (props) => ReactNode | 1.6.9 |
+| title | 节点标题（会覆盖 optionRenderer 的渲染结果） | ReactNode | 1.6.9 |
+| className | 节点自定义类名 | string | 1.6.9 |
+| style | 节点自定义样式 | CSSProperties | 1.6.9 |
+
+> 注意：`selectedKeys`、`checkedKeys`、`expandedKeys`、`checkable`、`multiple`、`checkStrictly`、`loadData`、`showLine`、`defaultExpandAll`、`defaultExpandedKeys` 等 Tree 组件属性由 TreeSelect 根据自身属性及内部状态统一管理，请勿通过 `onOption` 覆盖。
+
+更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。
 
 ### TreeSelect.TreeNode
 

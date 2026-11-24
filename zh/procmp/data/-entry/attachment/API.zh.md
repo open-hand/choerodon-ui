@@ -35,13 +35,13 @@ title: API
 | attachments | 附件列表 | (AttachmentFile \| FileLike)[] |  | |
 | showValidation | 校验信息展示方式 | newLine \| tooltip | viewMode == popup ? tooltip : newLine | |
 | getUUID | 获取 uuid | () => Promise<string> \| string | [attachment.getAttachmentUUID](/zh/procmp/configure/#Attachment) | 1.5.3 |
-| buttons | 功能按钮，默认存在`download` 和 `remove`值，且可传递数组或自定义 Dom 格式，数组为可选值字符串+按钮配置属性对象 | string[] \| \[string, object\] \| ReactNode[] | [['download', 'remove']] | 1.6.2 |
+| buttons | 功能按钮数组，内置按钮为 `preview`、`download`、`remove` 和 `history`。可通过 `[按钮名, ButtonProps]` 配置同名按钮，或追加自定义 Button 元素；传入数组与默认按钮合并，并非替换整个按钮列表 | ('preview' \| 'download' \| 'remove' \| 'history' \| [string, ButtonProps] \| ReactElement<ButtonProps>)[] | ['preview', 'download', 'remove'] | 1.6.2；preview：1.6.9 |
 | onAttachmentsChange | 附件列表变更事件 | (AttachmentFile[]) => void |  | |
 | beforeUpload | 上传文件之前的钩子，参数为上传的文件，可对文件在上传之前进行校验操作若返回 false 则停止上传并从列表充删除。支持返回一个 Promise 对象，Promise 对象 reject 或 resolve(false) 时则停止上传，resolve 时开始上传。 | (attachment: AttachmentFile, list: AttachmentFile[]) => (boolean \| Promise) | - | |
 | onUploadProgress | 上传进度变化的回调 | (percent: number, attachment: AttachmentFile) => void | | |
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void |  | |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void |  | | |
-| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }, multiple: boolean) => boolean | | |
+| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | (attachment: AttachmentFile) => boolean \| void | | |
 | onUploadAbort | 上传取消的回调，入参存在时是取消单个文件上传，不存在时是取消所有文件上传 | (attachment?: AttachmentFile) => void |  | 1.6.8 |
 | getPreviewUrl | 获取预览地址，默认使用 AttachmentFile.url，返回空则不可预览。其中函数的返回值为 (() => string \| Promise< string>) 时，仅支持 listType 为 text 的情况 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => (string \| (() => string \| Promise< string>) \| undefined) \| Promise<(string \| (() => string \| Promise< string>) \| undefined)>(1.6.8) | | 1.6.3 |
 | uploadImmediately | 是否立即上传，关闭后需要手动调用组件实例方法 `upload` 进行上传 | boolean | true | 1.6.8 |
@@ -58,6 +58,10 @@ title: API
 | onPreview | 文件点击预览时的回调 | (attachment: AttachmentFile) => void |  | 1.6.8 |
 | pictureCardShowName | 设置 picture-card 类型图片是否显示文件名 | boolean |  | 1.6.8 |
 | directory | 开启上传文件夹 | boolean |  | 1.6.8 |
+| batchMaxFileCount | 单次批量上传的最大文件数量限制，超出会提示用户是否继续上传，继续则会截取最大数量上传；未配置或非正数时不限制 | number | [globalConfig.uploadBatchMaxFileCount](/zh/procmp/configure/configure) | 1.6.9 |
+| onCustomPreview | 自定义手动触发的预览行为，不影响缩略图预览地址的获取 | (props: AttachmentFileProps) => void \| Promise<void> | 无 | 1.6.9 |
+| progressThrottle | 是否对 onUploadProgress 进行节流触发。设置为大于 0 的数字时，则按时间间隔进行节流；设置为对象类型时，step 字段为按进度步长进行节流；interval 字段为按时间间隔进行节流；两个字段都设置时，满足任一条件时都会触发 onUploadProgress。 | number \| { step?: number; interval?: number; } \| false | - | 1.6.9 |
+| alwaysShowActions | 设置操作按钮是否常显 | boolean | [globalConfig.uploadAlwaysShowActions](/zh/procmp/configure/configure) | 1.6.9 |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#formfield) 和 [Button](/zh/procmp/general/button#API)。
 
