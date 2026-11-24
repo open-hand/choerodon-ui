@@ -15,12 +15,9 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Board`: 修复 customizedLoad 返回 Table 兜底配置时切换视图报错的问题。
-- 🐞 `<pro>Lov`: 修复了 Lov 在合并 tableProps 时修改原始 MobX 可观察配置，导致渲染报错和页面白屏的问题。
-
 ## 1.6.9
 
-`2026-11-12`
+`2026-11-24`
 
 - 🌟 `configure`: 新增 selectBeforeCreateComboOption, uploadBatchMaxFileCount, attachment.previewTarget, lovModalAutoWidth, duplicateKey, uploadAlwaysShowActions 属性。
 - 🌟 `<pro>Table`: 查询栏 onReset 事件新增 type 参数用于区分触发的场景。
@@ -155,6 +152,8 @@ timeline: true
 - 🐞 `<pro>Form`: 修复 Form 动态校验失败时未按表单字段顺序聚焦首个错误输入框的问题。
 - 🐞 `Trigger`: 修复 Trigger 弹层内元素失焦时异常回焦，导致点击外部区域无法收起弹层的问题。
 - 🐞 `<pro>Output`: 修复 Output 入口在循环依赖场景下可能导出 undefined 的问题。
+- 🐞 `<pro>Board`: 修复 customizedLoad 返回 Table 兜底配置时切换视图报错的问题。
+- 🐞 `<pro>Lov`: 修复了 Lov 在合并 tableProps 时修改原始 MobX 可观察配置，导致渲染报错和页面白屏的问题。
 
 ## 1.6.8
 
