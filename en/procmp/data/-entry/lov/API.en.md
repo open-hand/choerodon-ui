@@ -24,6 +24,8 @@ title: API
 | popupSearchMode | When viewMode is popup, position of search conditions | PopupSearchMode: 'single', 'multiple' | multiple | 1.5.7 |
 | showDetailWhenReadonly | When the component is readOnly or disabled, click suffix to view selected item details (value set must support detail query) | boolean |  | 1.6.6 |
 
+In 1.6.9, Lov inherits `duplicateKey`, `popupMainField` and `popupShowAvatar` from [Select](/en/procmp/data-entry/select/#API). Duplicate values show hints without being disabled by default; set `duplicateKey={{ disable: true, showWarning: true }}` explicitly to disable them. `popupMainField` determines the primary text in popup lists and tree nodes. Use `popupShowAvatar="colorful"` for multicolored avatars in regular lists; tree dropdowns do not display avatars.
+
 ## SelectionProps
 
 > Added in version 1.5.1.

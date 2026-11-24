@@ -341,7 +341,7 @@ class App extends React.Component {
           searchCode: 'xxx',
           showSelectionTips: true,
           buttons,
-          buttonsLimit: 3,
+          // buttonsLimit: 3,
           // columns: this.columns,
           // children: this.columnsChilds,
           children: [
@@ -405,8 +405,7 @@ class App extends React.Component {
                   case 'read':
                     return {
                       // url: `read api`,
-                      url:
-                        'https://hzero-test.open.hand-china.com/mock/filterlist',
+                      url: 'https://hzero-test.open.hand-china.com/mock/filterlist',
                       method: 'get',
                     };
                   case 'create':
@@ -424,8 +423,7 @@ class App extends React.Component {
                   case 'destroy':
                     return {
                       // url: `destroy api`,
-                      url:
-                        'https://hzero-test.open.hand-china.com/mock/listDel',
+                      url: 'https://hzero-test.open.hand-china.com/mock/listDel',
                       data: data[0],
                       method: 'delete',
                     };

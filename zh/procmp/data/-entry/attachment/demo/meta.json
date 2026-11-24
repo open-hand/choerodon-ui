@@ -101,12 +101,12 @@
         "en": "Display in Table"
       },
       "description": {
-        "zh": "在表格中显示。\n",
-        "en": "Display in Table.\n"
+        "zh": "在表格中显示。\n1.6.9 示例更新：演示固定必输、动态必输、提示信息和手动校验。\n",
+        "en": "Display in Table.\nExample updated in 1.6.9 to demonstrate required and dynamically required fields, tooltips and manual validation.\n"
       },
       "order": 6,
       "screenshot": "",
-      "height": 230,
+      "height": 360,
       "category": "pro"
     },
     {

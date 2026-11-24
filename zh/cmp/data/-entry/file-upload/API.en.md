@@ -37,6 +37,10 @@ title: API
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
 | pictureCardShowName | Set whether the `picture-card` type image displays the file name | boolean |  | 1.6.5 |
+| onReject | Callback triggered when file type validation fails; invoked separately for each rejected file. | (file: UploadFile) => void | - | 1.6.9 |
+| viewMode | The display mode of the upload list supports two basic styles: list and popup. | 'list' \| 'popup' | list | 1.6.9 |
+| batchMaxFileCount | The maximum number of files in a single batch upload. If exceeded, the user will be prompted whether to continue; continuing uploads only the maximum number of files. Unconfigured or non-positive values impose no limit. | number | [globalConfig.uploadBatchMaxFileCount](/en/procmp/configure/configure) | 1.6.9 |
+| alwaysShowActions | Set whether the operation buttons remain visible at all times | boolean | [globalConfig.uploadAlwaysShowActions](/en/procmp/configure/configure) | 1.6.9 |
 
 
 ### ShowUploadListInterface

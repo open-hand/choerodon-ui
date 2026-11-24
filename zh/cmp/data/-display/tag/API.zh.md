@@ -4,13 +4,13 @@ title: API
 
 ### Tag
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| afterClose | 关闭动画完成后的回调 | () => void | - |
-| closable | 标签是否可以关闭 | boolean | false |
-| color | 标签色 | string | - |
-| onClose | 关闭时的回调 | (e) => void | - |
-| hoverShowPointer | Tag 组件 hover 时是否显示小手样式 | boolean | - |
+| 属性名 | 说明 | 类型 | 默认值 | 支持版本 |
+| --- | --- | --- | --- | --- |
+| afterClose | 关闭动画完成后的回调 | () => void | - | - |
+| closable | 标签是否可以关闭 | boolean | false | - |
+| color | 标签色 | string | - | - |
+| onClose | 关闭时的回调 | (e) => void | - | - |
+| hoverShowPointer | Tag 组件 hover 时是否显示小手样式 | boolean | [globalConfig.tagHoverShowPointer](/zh/procmp/configure/configure) | 1.6.7 |
 
 ### Tag.CheckableTag
 

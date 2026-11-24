@@ -36,13 +36,13 @@ title: API
 | attachments | Attachment list | (AttachmentFile \| FileLike)[] |  | |
 | showValidation | Validation information display method | newLine \| tooltip | viewMode == popup ? tooltip : newLine | |
 | getUUID | Get uuid | () => Promise<string> \| string | [attachment.getAttachmentUUID](/en/procmp/configure/#Attachment) | 1.5.3 |
-| buttons | Function buttons, default exist `download` and `remove` values, and can pass array or custom Dom format, array is optional value string + button configuration property object | string[] \| \[string, object\] \| ReactNode[] | [['download', 'remove']] | 1.6.2 |
+| buttons | Action button array. Built-in names are `preview`, `download`, `remove` and `history`. Use `[name, ButtonProps]` to configure a named button or append a custom Button element. The array merges with the default buttons rather than replacing the entire list | ('preview' \| 'download' \| 'remove' \| 'history' \| [string, ButtonProps] \| ReactElement<ButtonProps>)[] | ['preview', 'download', 'remove'] | 1.6.2; preview: 1.6.9 |
 | onAttachmentsChange | Attachment list change event | (AttachmentFile[]) => void |  | |
 | beforeUpload | Hook before uploading file, parameter is the uploaded file, can verify the file before uploading, if return false then stop uploading and delete from list. Support returning a Promise object, Promise object reject or resolve(false) then stop uploading, resolve then start uploading. | (attachment: AttachmentFile, list: AttachmentFile[]) => (boolean \| Promise) | - | |
 | onUploadProgress | Upload progress change callback | (percent: number, attachment: AttachmentFile) => void | | |
 | onUploadSuccess | Upload success callback | (response: any, attachment: AttachmentFile) => void |  | |
 | onUploadError | Upload error callback | (error: Error, attachment: AttachmentFile) => void |  | | |
-| onRemove | Delete file callback, used to send delete request, return false or throw exception will abort deletion | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }, multiple: boolean) => boolean | | |
+| onRemove | Delete file callback, used to send delete request, return false or throw exception will abort deletion | (attachment: AttachmentFile) => boolean \| void | | |
 | onUploadAbort | Callback for upload cancellation. If the input parameter exists, it will cancel the upload of a single file. If it does not exist, it will cancel the upload of all files. | (attachment?: AttachmentFile) => void |  | 1.6.8 |
 | getPreviewUrl | Get preview address, default use AttachmentFile.url, return empty then cannot preview. When the return value of the function is (() => string \| Promise< string>), it only supports the case where listType is text | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => (string \| (() => string \| Promise< string>) \| undefined) \| Promise<(string \| (() => string \| Promise< string>) \| undefined)>(1.6.8) | | 1.6.3 |
 | uploadImmediately | Whether to upload immediately. After closing, you need to manually call the component instance method `upload` to upload | boolean | true | 1.6.8 |
@@ -59,6 +59,10 @@ title: API
 | onPreview | Callback when file is clicked to preview | (attachment: AttachmentFile) => void |  | 1.6.8 |
 | pictureCardShowName | Set whether the `picture-card` type picture displays the file name | boolean |  | 1.6.8 |
 | directory | Open the upload folder | boolean |  | 1.6.8 |
+| batchMaxFileCount | The maximum number of files in a single batch upload. If exceeded, the user will be prompted whether to continue; continuing uploads only the maximum number of files. Unconfigured or non-positive values impose no limit. | number | [globalConfig.uploadBatchMaxFileCount](/en/procmp/configure/configure) | 1.6.9 |
+| onCustomPreview | Custom manual preview behavior that does not affect the acquisition of thumbnail preview URLs | (props: AttachmentFileProps) => void \| Promise<void> | - | 1.6.9 |
+| progressThrottle | Whether to throttle the triggering of onUploadProgress. When set to a number greater than 0, throttling is applied based on the time interval; when set to an object type, the step field throttles based on progress steps, and the interval field throttles based on the time interval; when both fields are set, onUploadProgress will be triggered when either condition is met. | number \| { step?: number; interval?: number; } \| false | - | 1.6.9 |
+| alwaysShowActions | Set whether the operation buttons remain visible at all times | boolean | [globalConfig.uploadAlwaysShowActions](/en/procmp/configure/configure) | 1.6.9 |
 
 For more properties, please refer to [FormField](/en/procmp/abstract/field#formfield) and [Button](/en/procmp/general/button#API).
 

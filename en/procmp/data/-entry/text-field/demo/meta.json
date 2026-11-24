@@ -109,12 +109,13 @@
         "en": "Multiple"
       },
       "description": {
-        "zh": "通过属性`multiple`设置为多值。\n",
-        "en": "Multiple values via property `multiple`.\n"
+        "zh": "通过属性`multiple`设置为多值。\n1.6.9 新增 tagSeparatorRenderer 自定义标签分隔符；示例预置三个标签，点击分隔符可切换且/或关系。\n",
+        "en": "Multiple values via property `multiple`.\nIn 1.6.9, tagSeparatorRenderer adds custom tag separators. Three initial tags let you click a separator to toggle AND/OR relationships.\n"
       },
       "order": 6,
       "screenshot": "",
-      "category": "pro"
+      "category": "pro",
+      "height": 220
     },
     {
       "filename": "renderer.js",
@@ -157,6 +158,21 @@
       "order": 9,
       "height": 300,
       "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "maxtagcount-responsive.js",
+      "title": {
+        "zh": "多值响应式",
+        "en": "maxTagCount - responsive"
+      },
+      "description": {
+        "zh": "多值标签最大数量，支持响应式配置。1.6.9。\n",
+        "en": "Maximum number of tags displayed for multiple values. Supports responsive configuration. 1.6.9.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 300,
       "category": "pro"
     }
   ]

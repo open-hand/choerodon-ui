@@ -243,6 +243,36 @@
       "screenshot": "",
       "height": 260,
       "category": "pro"
+    },
+    {
+      "filename": "avatar.js",
+      "title": {
+        "zh": "头像展示",
+        "en": "Avatar Display"
+      },
+      "description": {
+        "zh": "1.6.9：popupShowAvatar 显示主字段首字符头像，设置为 'colorful' 开启多色头像。popupMainField 只改变头像取字字段，不替换选项文本。\n",
+        "en": "In 1.6.9, popupShowAvatar displays the first character of the main field; set it to 'colorful' for multicolored avatars. popupMainField changes the avatar source without replacing option text.\n"
+      },
+      "order": 16,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
+    },
+    {
+      "filename": "duplicate-value-field.js",
+      "title": {
+        "zh": "重复值复现",
+        "en": "Duplicate Value Reproduction"
+      },
+      "description": {
+        "zh": "打开任一下拉框后，本示例通过 duplicateKey.disable 显式禁用重复记录，并在选项内显示提示，同时控制台输出警告。该示例仅用于复现问题，业务中不建议使用重复值。\n\n1.6.9。",
+        "en": "Open either dropdown to see duplicate-value options explicitly disabled via duplicateKey.disable with hints displayed inside the options, while a warning is also output to the console. This demo is only for reproduction; duplicate values are not recommended in business code.\n\n1.6.9."
+      },
+      "order": 17,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
     }
   ]
 }

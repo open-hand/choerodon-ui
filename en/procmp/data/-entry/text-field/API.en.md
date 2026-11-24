@@ -26,6 +26,8 @@ title: API
 | forceShowRangeSeparator | Whether to force show separator for range fields; in isFlat mode, shows only when there is a placeholder or value | boolean |  | 1.6.7 |
 | tooltip | Input box `tooltip` configuration | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 | placeholderTooltip | Input box `placeholder` `tooltip` configuration, empty value is valid | TextTooltip \| \[TextTooltip, TooltipProps\] |  | 1.6.8 |
+| fieldFocusMode | Input focus behavior: `checked` selects all text when focused; `focus` places the cursor without selecting all text. | `checked` \| `focus` | [globalConfig.fieldFocusMode](/en/procmp/configure/configure#API) | 1.6.9 |
+| tagSeparatorRenderer | Render separators between adjacent visible tags, excluding the separator before an overflow placeholder. index is the next tag's index in the original value array; previousValue and nextValue are adjacent values. Interactions should respect disabled and readOnly | ({ index: number, previousValue: any, nextValue: any, disabled: boolean, readOnly: boolean }) => ReactNode |  | 1.6.9 |
 
 For more properties, please refer to [FormField](/en/procmp/abstract/field#FormField).
 

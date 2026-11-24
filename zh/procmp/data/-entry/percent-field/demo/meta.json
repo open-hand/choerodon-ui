@@ -1,0 +1,38 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "1.6.9：展示百分数并存储小数。precision={4} 时，0.0126 显示为 1.26%；onChange 返回小数存储值。\n",
+        "en": "In 1.6.9, percentages are displayed while decimal values are stored. With precision={4}, 0.0126 is displayed as 1.26%; onChange returns the stored decimal value.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据源",
+        "en": "DataSet"
+      },
+      "description": {
+        "zh": "1.6.9：绑定 type='percentage' 的 DataSet 字段，展示单值、范围和多值。初始值 0.125 显示为 12.5%；补零和语言小数分隔符通过局部 ConfigProvider 配置。\n",
+        "en": "In 1.6.9, bind DataSet fields with type='percentage' for single values, ranges and multiple values. The initial value 0.125 displays as 12.5%; zero filling and locale decimal separators are configured through a local ConfigProvider.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 300,
+      "category": "pro"
+    }
+  ]
+}
