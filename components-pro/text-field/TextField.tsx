@@ -1277,6 +1277,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.left = 0;
       editorStyle.top = 0;
       editorStyle.zIndex = -1;
+      if (this.getValues().length > 0) {
+        editorStyle.caretColor = 'transparent';
+      }
       props.readOnly = true;
     } else if (text) {
       editorStyle.width = pxToRem(this.measureTextWidth(text), true)!;

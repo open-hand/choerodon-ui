@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Select`: Fixed an issue where a non-editable single-select Select with a selected value still displayed a text caret when focused.
+
+
 ## 1.6.9
 
 `2026-11-24`

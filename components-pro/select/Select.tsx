@@ -729,6 +729,18 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     });
   }
 
+  getOtherProps() {
+    const otherProps = super.getOtherProps();
+    const { multiple, range, editable, valueField, textField } = this;
+    if (!multiple && !range && !editable && !isFieldValueEmpty(this.getValue(), range, multiple, valueField, textField)) {
+      otherProps.style = {
+        ...otherProps.style,
+        caretColor: 'transparent',
+      };
+    }
+    return otherProps;
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'searchable',
