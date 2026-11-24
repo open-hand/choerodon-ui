@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🐞 `<pro>Select`: Fixed an issue where a non-editable single-select Select with a selected value still displayed a text caret when focused.
-
+- 🐞 `<pro>PerformanceTable`: Fixed an issue where the horizontal scrollbar covered the `PerformanceTable` footer when `showScrollArrow` was enabled.
 
 ## 1.6.9
 
