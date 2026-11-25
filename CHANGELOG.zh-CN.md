@@ -17,6 +17,7 @@ timeline: true
 
 - 🐞 `<pro>Select`: 修复不可输入的单选下拉框在已有选中值时，聚焦后仍显示文本插入光标的问题。
 - 🐞 `<pro>PerformanceTable`: 修复开启 showScrollArrow 时，横向滚动条遮挡表尾内容的问题。
+- 🐞 `<pro>Board`: 修复 Board 自定义表格换源后数据未更新，以及关闭`autoQuery` 时恢复视图未触发`onChange` 的问题。
 
 ## 1.6.9
 
