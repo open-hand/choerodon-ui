@@ -63,7 +63,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
   const openCustomizationModal = useCallback(() => {
     const modalProps: ModalProps = {
       drawer: true,
-      title: '看板视图配置',
+      title: $l('Board', 'kanban_view_settings'),
       children: <KanbanCustomizationSettings viewMode={ViewMode.kanban} />,
       bodyStyle: {
         overflow: 'hidden auto',
@@ -169,7 +169,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
             quotes={kanbanQuote ? kanbanQuote.get(dataKey) : []}
             kanbanDS={kanbanDS}
             columnId={groupValue === undefined ? '_empty' : groupValue}
-            header={groupText || '未分组'}
+            header={groupText || $l('Board', 'ungrouped')}
             groupingBy={groupFieldName}
           />
         )

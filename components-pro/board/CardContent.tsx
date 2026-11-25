@@ -59,7 +59,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
     const modalProps: ModalProps = {
       drawer: true,
       okFirst: false,
-      title: '卡片视图配置',
+      title: $l('Board', 'card_view_settings'),
       children: <KanbanCustomizationSettings viewMode={ViewMode.card} />,
       bodyStyle: {
         overflow: 'hidden auto',

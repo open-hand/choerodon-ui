@@ -8,6 +8,7 @@ import DataSet from '../data-set';
 import { ViewMode } from './enum';
 import Typography from '../typography';
 import Output from '../output';
+import { $l } from '../locale-context';
 
 type QuoteItemProps = {
   quote: any,
@@ -109,7 +110,7 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
                 renderer={firstDisplayFields ? firstDisplayFields.renderer : noop}
               />
             </p>)
-            : <span className={`${prefixCls}-quote-content-label`}>请配置显示字段</span>}
+            : <span className={`${prefixCls}-quote-content-label`}>{$l('Board', 'configure_display_fields')}</span>}
           <CardCommand
             command={command}
             viewMode={ViewMode.kanban}

@@ -23,6 +23,7 @@ import { ViewField } from './enum';
 import Button from '../button';
 import { FuncType } from '../button/interface';
 import { KanbanProps } from './Board';
+import { $l } from '../locale-context';
 
 
 export const getBackgroundColor = (
@@ -137,7 +138,7 @@ const getRowRender = (quotes: any, columnId, prefixCls: string, viewProps, listD
               hidden={listDragging}
               funcType={FuncType.flat}
             >
-              加载更多
+              {$l('Board', 'load_more')}
             </Button>
           ) : null}
         </>

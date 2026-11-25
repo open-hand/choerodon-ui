@@ -133,7 +133,9 @@
     overflow: hidden;
 
     &-overflow {
-      overflow-x: auto;
+      div&{
+        overflow-x: auto;
+      }
 
       // 列宽度设置百分比且表格纵向有滚动条场景
       &-y.@{table-prefix-cls}-content-column-has-percent {

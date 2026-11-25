@@ -18,6 +18,7 @@ import { TableProps } from '../table/Table';
 import { FieldType } from '../data-set/enum';
 import Record from '../data-set/Record';
 import { DataSetComponentProps, DataSetProps } from '../data-set/interface';
+import { $l } from '../locale-context';
 
 export const VIEWLISTDS = '__VIEWLISTDS__';
 
@@ -78,22 +79,18 @@ export interface BoardCustomized {
   id: string;
 }
 
-export const DEFAULTVIEW = {
-  card: {
-    [ViewField.viewName]: '初始卡片视图',
-    [ViewField.viewMode]: ViewMode.card,
+const initialViewNameKeys = {
+  [ViewMode.card]: 'initial_card_view',
+  [ViewMode.kanban]: 'initial_kanban_view',
+  [ViewMode.table]: 'initial_table_view',
+} as const;
+
+export function getDefaultView(viewMode: ViewMode) {
+  return {
+    [ViewField.viewName]: $l('Board', initialViewNameKeys[viewMode]),
+    [ViewField.viewMode]: viewMode,
     [ViewField.id]: '__DEFAULT__',
-  },
-  kanban: {
-    [ViewField.viewName]: '初始看板视图',
-    [ViewField.viewMode]: ViewMode.kanban,
-    [ViewField.id]: '__DEFAULT__',
-  },
-  table: {
-    [ViewField.viewName]: '初始列表视图',
-    [ViewField.viewMode]: ViewMode.table,
-    [ViewField.id]: '__DEFAULT__',
-  },
+  };
 }
 
 const Board: FunctionComponent<BoardProps> = function Board(props) {
@@ -244,7 +241,7 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
         };
         const defaultView = {
           code: customizedCode,
-          ...DEFAULTVIEW[defaultViewMode],
+          ...getDefaultView(defaultViewMode),
           [ViewField.viewProps]: {
             ...viewProps[defaultViewMode],
             ...defaultViewProps[defaultViewMode],

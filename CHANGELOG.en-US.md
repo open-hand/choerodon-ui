@@ -15,8 +15,10 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Board`: Improved the multi-language support for the Board interface text and default view name.
 - 🐞 `<pro>Select`: Fixed an issue where a non-editable single-select Select with a selected value still displayed a text caret when focused.
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where the horizontal scrollbar covered the `PerformanceTable` footer when `showScrollArrow` was enabled.
+- 🐞 `<pro>Board`: Fixed stale data after switching a Board custom table's dataSet and missing `onChange` when restoring the view with `autoQuery` disabled.
 
 ## 1.6.9
 

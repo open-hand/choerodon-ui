@@ -31,7 +31,7 @@ import { treeReduce } from '../../_util/treeUtils';
 import Tooltip from '../../tooltip';
 import ObserverNumberField from '../../number-field';
 import ObserverTextField from '../../text-field';
-import { $l } from '../../locale-context';
+import localeContext, { $l } from '../../locale-context';
 import { ButtonColor, ButtonProps, FuncType } from '../../button/interface';
 import DataSet from '../../data-set/DataSet';
 import ObserverCheckBox from '../../check-box';
@@ -325,7 +325,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
       for (let index = 0; index < colNumber; index++) {
         colItems.push(
           <div className={`${layoutPrefixCls}-list-row-col`}>
-            第{index + 1}列：
+            {$l('Board', 'layout_column', { index: index + 1 })}
             <ObserverSelect
               placeholder={$l('Table', 'please_select_column')}
               className={`${layoutPrefixCls}-list-row-col-name`}
@@ -364,25 +364,30 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
         <div className={`${layoutPrefixCls}-list-row-header`}>
           <div className={`${layoutPrefixCls}-list-row-header-left`}>
             <Tag>
-              第{dataSet?.lang === Lang.zh_CN ? arabicToChinese(index + 1) : index + 1}行
-            </Tag>配置
-            <ObserverNumberField
-              style={{ width: 50, margin: '0 4px' }}
-              placeholder="列数"
-              min={1}
-              step={1}
-              record={record}
-              name="colNumber"
-              clearButton={false}
-              onChange={(value) => setColNumber(value)}
-            />列
+              {$l('Board', 'layout_row', { index: localeContext.locale.lang === Lang.zh_CN ? arabicToChinese(index + 1) : index + 1 })}
+            </Tag>
+            {$l('Board', 'layout_column_count', {
+              input: (
+                <ObserverNumberField
+                  key="colNumber"
+                  style={{ width: 50, margin: '0 4px' }}
+                  placeholder={$l('Board', 'column_count')}
+                  min={1}
+                  step={1}
+                  record={record}
+                  name="colNumber"
+                  clearButton={false}
+                  onChange={(value) => setColNumber(value)}
+                />
+              ),
+            })}
           </div>
           <ObserverCheckBox
             record={record}
             name="showLabel"
             style={{ margin: '0 4px' }}
           />
-          显示字段名
+          {$l('Board', 'show_field_label')}
           <Button
             className={`${layoutPrefixCls}-list-row-header-delete`}
             icon='delete_black-o'
@@ -479,7 +484,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
         })
         const defaultView = {
           code: customizedCode,
-          [ViewField.viewName]: '初始列表视图',
+          [ViewField.viewName]: $l('Board', 'initial_table_view'),
           [ViewField.viewMode]: ViewMode.table,
           [ViewField.id]: '__DEFAULT__',
         }
@@ -617,7 +622,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
         <CollapsePanel
           header={
             <span className={`${prefixCls}-customization-panel-title`}>
-              显示设置
+              {$l('Board', 'display_settings')}
             </span>
           }
           key="kanban"
@@ -625,16 +630,16 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
           <Form className={`${prefixCls}-customization-form`} record={kanbanRecord}>
             <ObserverTextField
               name={ViewField.viewName}
-              label="视图名称"
+              label={$l('Board', 'view_name')}
             />
             <ObserverSelect
               name="groupField"
-              label="分组字段"
+              label={$l('Board', 'group_field')}
               clearButton={false}
               hidden={viewMode !== ViewMode.kanban}
             />
             <ObserverNumberField
-              label="视图高度"
+              label={$l('Board', 'view_height')}
               name={ViewField.viewHeight}
             />
           </Form>
@@ -642,7 +647,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
         <CollapsePanel
           header={
             <span className={`${prefixCls}-customization-panel-title`}>
-              卡片设置
+              {$l('Board', 'card_settings')}
             </span>
           }
           key="card"
@@ -650,41 +655,41 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
           <Form className={`${prefixCls}-customization-form`} record={kanbanRecord}>
             <ObserverSelect
               name="cardWidth"
-              label="卡片宽度"
+              label={$l('Board', 'card_width')}
               key="cardWidth"
               clearButton={false}
             >
               <ObserverSelect.Option value={4}>
-                窄
+                {$l('Board', 'narrow')}
               </ObserverSelect.Option>
               <ObserverSelect.Option value={6}>
-                适中
+                {$l('Board', 'medium')}
               </ObserverSelect.Option>
               <ObserverSelect.Option value={8}>
-                较宽
+                {$l('Board', 'wider')}
               </ObserverSelect.Option>
               <ObserverSelect.Option value={12}>
-                宽
+                {$l('Board', 'wide')}
               </ObserverSelect.Option>
             </ObserverSelect>
             <ObserverSelectBox
               name="cardLayout"
-              label="字段布局"
+              label={$l('Board', 'field_layout')}
               key="cardLayout"
               hidden={viewMode !== ViewMode.card}
               clearButton={false}
             >
               <ObserverSelectBox.Option value="form">
-                表单
+                {$l('Board', 'form')}
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option value="grid">
-                栅格
+                {$l('Board', 'grid')}
               </ObserverSelectBox.Option>
             </ObserverSelectBox>
             <ObserverSelect
               hidden={kanbanRecord.get(ViewField.cardLayout) === 'grid' && viewMode === ViewMode.card}
               name="displayFields"
-              label="显示字段"
+              label={$l('Board', 'display_fields')}
               key="displayFields"
               popupContent={renderPopupContent}
               onClear={() => kanbanRecord.set(ViewField.displayFields, null)}
@@ -709,13 +714,13 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
               name="showLabel"
               hidden={kanbanRecord.get(ViewField.cardLayout) === 'grid' && viewMode === ViewMode.card}
               key="showLabel"
-              label="显示字段名称"
+              label={$l('Board', 'show_field_name')}
             >
               <ObserverSelectBox.Option style={{ paddingRight: 16 }} value={1}>
-                是
+                {$l('Tabs', 'yes')}
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option value={0}>
-                否
+                {$l('Tabs', 'no')}
               </ObserverSelectBox.Option>
             </ObserverSelectBox>
           </Form>
@@ -723,7 +728,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
             kanbanRecord.get(ViewField.cardLayout) === 'grid' && viewMode === ViewMode.card ? (
               <div className={`${prefixCls}-customization-panel-grid-wrapper`}>
                 <div className={`${prefixCls}-customization-panel-grid-des`}>
-                  <span>添加行及每行需要展示的字段</span>
+                  <span>{$l('Board', 'add_row_hint')}</span>
                   <div className={`${sortPrefixCls}-add-button`}>
                     <Button
                       funcType={FuncType.link}
@@ -732,7 +737,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
                       color={ButtonColor.primary}
                       disabled={layOutDataSet.length >= displayFields.length}
                     >
-                      新增行
+                      {$l('Board', 'add_row')}
                     </Button>
                   </div>
                 </div>
@@ -754,15 +759,15 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
           <Form hidden={viewMode !== ViewMode.card} className={`${prefixCls}-customization-form`} record={kanbanRecord}>
             <ObserverSelectBox
               name="buttonPosition"
-              label="按钮位置"
+              label={$l('Board', 'button_position')}
               key="buttonPosition"
               clearButton={false}
             >
               <ObserverSelectBox.Option value="top">
-                卡片上方
+                {$l('Board', 'above_card')}
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option value="bottom">
-                卡片下方
+                {$l('Board', 'below_card')}
               </ObserverSelectBox.Option>
             </ObserverSelectBox>
             <ObserverSelectBox
@@ -772,13 +777,13 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
               clearButton={false}
             >
               <ObserverSelectBox.Option value="left">
-                左对齐
+                {$l('Board', 'align_left')}
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option hidden={kanbanRecord.get('buttonPosition') === 'top'}  value="center">
-                居中
+                {$l('Board', 'align_center')}
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option value="right">
-                右对齐
+                {$l('Board', 'align_right')}
               </ObserverSelectBox.Option>
             </ObserverSelectBox>
           </Form>
@@ -786,17 +791,17 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
             <Form style={{ width: '65%' }} className={`${prefixCls}-customization-form`} record={kanbanRecord}>
               <ObserverSelectBox
                 name="buttonDisplay"
-                label="按钮展示"
+                label={$l('Board', 'button_display')}
                 key="buttonDisplay"
                 clearButton={false}
               >
                 <ObserverSelectBox.Option value="none">
-                  全部收起
+                  {$l('Board', 'collapse_all')}
                 </ObserverSelectBox.Option>
                 <ObserverSelectBox.Option value="limit">
                   <div className={`${prefixCls}-customization-panel-btn-des`}>
-                    部分展示
-                    <Tooltip title="部分按钮展示在外面，其余按钮放在更多操作内">
+                    {$l('Board', 'show_some')}
+                    <Tooltip title={$l('Board', 'show_some_hint')}>
                       <Icon type='help' />
                     </Tooltip>
                   </div>
@@ -804,28 +809,33 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
               </ObserverSelectBox>
             </Form>
             <div hidden={kanbanRecord.get('buttonDisplay') === 'none' || viewMode !== ViewMode.card}>
-              <ObserverNumberField
-                style={{ width: 50, margin: '0 4px' }}
-                min={0}
-                step={1}
-                record={kanbanRecord}
-                name="commandsLimit"
-                clearButton={false}
-              />个
+              {$l('Board', 'button_count', {
+                input: (
+                  <ObserverNumberField
+                    key="commandsLimit"
+                    style={{ width: 50, margin: '0 4px' }}
+                    min={0}
+                    step={1}
+                    record={kanbanRecord}
+                    name="commandsLimit"
+                    clearButton={false}
+                  />
+                ),
+              })}
             </div>
           </div>
         </CollapsePanel>
         <CollapsePanel
           header={
             <span className={`${prefixCls}-customization-panel-title`}>
-              数据设置
+              {$l('Board', 'data_settings')}
             </span>
           }
           key="data"
         >
           <div className={`${prefixCls}-customization-panel-des`}>
-            <span>选择此视图下的记录默认排序方式</span>
-            <Tooltip title="可排序的前提是后端查询已支持排序">
+            <span>{$l('Board', 'default_sort_hint')}</span>
+            <Tooltip title={$l('Board', 'sort_support_hint')}>
               <Icon type='help' />
             </Tooltip>
           </div>

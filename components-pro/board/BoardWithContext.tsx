@@ -39,7 +39,7 @@ import TextField from '../text-field';
 import ModalProvider from '../modal-provider';
 import { ModalProps } from '../modal/Modal';
 import { useModal } from '../modal-provider/ModalProvider';
-import { BoardProps, BoardCustomized, DEFAULTVIEW } from './Board';
+import { BoardProps, BoardCustomized, getDefaultView } from './Board';
 import KanbanContent from './KanbanContent';
 import BoardContext, { BoardContextValue } from './BoardContext';
 import { getColumnKey, getEditorByField, getPlaceholderByField } from '../table/utils';
@@ -202,16 +202,16 @@ function processGroupData(dataSet: DataSet): object[] {
 const ModalContent = ({ modal, prefixCls, groupDataSet }: any) => (
   <div className={`${prefixCls}-board-modal-content`}>
     <div>
-      选择一个字段，数据将按照此字段中的字段值分组显示在看板中，支持字段类型：单选、下拉单选
+      {$l('Board', 'group_field_help')}
     </div>
     <Form dataSet={groupDataSet}>
       <TextField
-        label="视图名称"
+        label={$l('Board', 'view_name')}
         name={ViewField.viewName}
       />
       <Select
         name="groupField"
-        label="选择分组字段"
+        label={$l('Board', 'select_group_field')}
         onChange={(value) => {
           if (value) {
             modal.update({
@@ -283,7 +283,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
   const TableRef = useRef<Table>(null);
   const DropdownRef = useRef(null);
   const SwitchBtnRef = useRef(null);
-  const oldDSRef = useRef(null);
+  const previousTableRef = useRef<{ source: DataSet; viewId: string | undefined; tableDataSet: DataSet }>();
 
   const optionDS = useMemo(() => new DataSet({
     data: processGroupData(dataSet),
@@ -316,7 +316,11 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
     autoCreate: true,
     fields: [
       { name: ViewField.groupField, required: true, type: FieldType.object, options: optionDS },
-      { name: ViewField.viewName, type: FieldType.string, defaultValue: '看板视图' },
+      {
+        name: ViewField.viewName,
+        type: FieldType.string,
+        dynamicProps: { defaultValue: () => $l('Board', 'kanban_view') },
+      },
     ],
   }), [dataSet]);
 
@@ -378,7 +382,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
       };
       const defaultView = {
         code: customizedCode,
-        ...DEFAULTVIEW[defaultViewMode],
+        ...getDefaultView(defaultViewMode),
         [ViewField.viewProps]: {
           ...viewProps[defaultViewMode],
           ...defaultViewProps[defaultViewMode],
@@ -453,8 +457,9 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
    */
   const addBoardView = useCallback(() => {
     setHidden(true);
+    groupDataSet.reset();
     const modalProps: ModalProps = {
-      title: '看板视图',
+      title: $l('Board', 'kanban_view'),
       autoCenter: true,
       style: {
         width: 595,
@@ -574,7 +579,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                   onClick={async (e) => {
                     e.stopPropagation();
                     setHidden(true);
-                    if (await confirm('确认删除') !== 'cancel') {
+                    if (await confirm($l('Board', 'confirm_delete')) !== 'cancel') {
                       runInAction(() => {
                         record.status = RecordStatus.delete;
                         try {
@@ -594,7 +599,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           );
         }) : null}
         <div className={`${prefixCls}-switch-board-footer`}>
-          <div>添加视图</div>
+          <div>{$l('Board', 'add_view')}</div>
           <div className={`${prefixCls}-view-add`}>
             <div
               hidden={!viewTypeVisible.table}
@@ -602,7 +607,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                 customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
                 customizedDS!.create({
                   [ViewField.viewMode]: ViewMode.table,
-                  [ViewField.viewName]: '列表视图',
+                  [ViewField.viewName]: $l('Board', 'table_view'),
                   [ViewField.viewProps]: {},
                   [ViewField.activeKey]: 1,
                 }, 0);
@@ -619,7 +624,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
               }}
             >
               <Icon type="biaoge-o" />
-              列表
+              {$l('Board', 'table')}
             </div>
             <div
               hidden={!viewTypeVisible.card}
@@ -627,7 +632,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                 customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
                 customizedDS.create({
                   [ViewField.viewMode]: ViewMode.card,
-                  [ViewField.viewName]: '卡片视图',
+                  [ViewField.viewName]: $l('Board', 'card_view'),
                   [ViewField.viewProps]: {
                     [ViewField.cardWidth]: cardProps?.cardWidth || 6,
                     [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
@@ -652,11 +657,11 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
               }}
             >
               <Icon type="kapian" />
-              卡片
+              {$l('Board', 'card')}
             </div>
             <div hidden={!viewTypeVisible.kanban} onClick={addBoardView}>
               <Icon type="kanban" />
-              看板
+              {$l('Board', 'kanban')}
             </div>
           </div>
         </div>
@@ -692,8 +697,9 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
     );
   }, [hidden, searchText, viewTypeVisible]);
 
+  const viewId = customizedDS.current ? customizedDS.current.get(ViewField.id) : '__DEFAULT__';
   const tableDataSet = useMemo(() => {
-    const isDefault = customizedDS.current ? customizedDS.current.get(ViewField.id) === '__DEFAULT__' : true;
+    const isDefault = viewId === '__DEFAULT__';
     const defaultSortParams = (dataSet.combineSort && customizedDS.current) ? customizedDS.current.get(ViewField.combineSort) || [] : [];
     const orgFields = dataSet.fields ? processFieldProps(dataSet.fields) : [];
     const orderFields = orgFields.map((field) => {
@@ -709,23 +715,26 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
       fields: orderFields,
       autoQuery,
     });
-  }, [customizedDS.current && customizedDS.current.get(ViewField.id)]);
+  }, [dataSet, viewId]);
 
   const tableDataSetName = useMemo(() => {
-    if (customizedDS.current && customizedDS.current.get(ViewField.viewMode) === ViewMode.table) {
-      const changed = customizedDS.getState('__ISCHANGE__');
-      oldDSRef.current = dataSet!.getState('__CURRENTVIEWDS__');
-      if (isFunction(onChange) && tableDataSet && changed) {
-        onChange({ record: customizedDS.current, dataSet, currentViewDS: tableDataSet, oldViewDS: oldDSRef.current });
+    const previous = previousTableRef.current;
+    const currentView = customizedDS.current;
+    if (currentView && currentView.get(ViewField.viewMode) === ViewMode.table) {
+      const sourceChanged = previous && previous.viewId === viewId && previous.source !== dataSet;
+      const needsManualLoad = tableDataSet !== dataSet && !autoQuery;
+      const changed = sourceChanged
+        ? needsManualLoad
+        : (!previous && needsManualLoad) || customizedDS.getState('__ISCHANGE__');
+      if (isFunction(onChange) && changed) {
+        const oldViewDS = sourceChanged ? previous.tableDataSet : dataSet.getState('__CURRENTVIEWDS__');
+        onChange({ record: currentView, dataSet, currentViewDS: tableDataSet, oldViewDS });
       }
+      previousTableRef.current = { source: dataSet, viewId, tableDataSet };
+    } else {
+      previousTableRef.current = undefined;
     }
   }, [tableDataSet]);
-
-  useEffect(() => {
-    return () => {
-      oldDSRef.current = null;
-    };
-  }, [dataSet, tableDataSet]);
 
 
   const renderContent = useCallback((): ReactNode => {
@@ -787,7 +796,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
         kanbanProps={kanbanProps}
       />
     );
-  }, [tableProps.buttonsLimit, customizedDS.current, viewHeight, currentDisplayFields, hidden, searchText, tableProps, viewTypeVisible]);
+  }, [tableProps.buttonsLimit, customizedDS.current, viewHeight, currentDisplayFields, hidden, searchText, tableProps, viewTypeVisible, dataSet, tableDataSet]);
 
 
   const value: BoardContextValue = {
