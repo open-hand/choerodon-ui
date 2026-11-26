@@ -302,26 +302,37 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     }
   }, [dataSet, name, sortableCallback, field, column]);
 
+  const effectiveHeaderRowHeight = headerRowHeight === undefined ? rowHeight : headerRowHeight;
   const handleMouseEnter = useCallback((e) => {
     const tooltip = tableStore.getColumnTooltip(column);
     const { currentTarget } = e;
-    const measureElement = currentTarget.getElementsByClassName(`${prefixCls}-cell-inner-right-has-other`)[0] || currentTarget;
-    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(measureElement)))) {
-      const defaultTooltipProps: TooltipProps = {
-        title: header,
-        placement: getTooltipPlacement('table-cell') || 'right',
-        theme: getTooltipTheme('table-cell'),
-      };
-      const tooltipConfig: TooltipProps = isFunction(tooltipProps)
-        ? tooltipProps('header', defaultTooltipProps, field)
-        : isObject(tooltipProps) ? tooltipProps : {};
-      show(currentTarget, {
-        ...defaultTooltipProps,
-        ...tooltipConfig,
-      });
-      globalRef.current.tooltipShown = true;
+    if (tableStore.columnResizing || (tooltip !== TableColumnTooltip.always && tooltip !== TableColumnTooltip.overflow)) {
+      return;
     }
-  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement, header, field, tooltipProps]);
+    if (tooltip === TableColumnTooltip.overflow) {
+      const measureElement = currentTarget.getElementsByClassName(`${prefixCls}-cell-inner-right-has-other`)[0] || currentTarget;
+      // 自动行高只检测实际横向溢出，跳过没有可测宽度的普通 inline 标题。
+      const overflowing = effectiveHeaderRowHeight === 'auto'
+        ? measureElement.clientWidth > 0 && measureElement.scrollWidth > measureElement.clientWidth
+        : isOverflow(measureElement, 0.2);
+      if (!overflowing) {
+        return;
+      }
+    }
+    const defaultTooltipProps: TooltipProps = {
+      title: header,
+      placement: getTooltipPlacement('table-cell') || 'right',
+      theme: getTooltipTheme('table-cell'),
+    };
+    const tooltipConfig: TooltipProps = isFunction(tooltipProps)
+      ? tooltipProps('header', defaultTooltipProps, field)
+      : isObject(tooltipProps) ? tooltipProps : {};
+    show(currentTarget, {
+      ...defaultTooltipProps,
+      ...tooltipConfig,
+    });
+    globalRef.current.tooltipShown = true;
+  }, [tableStore, column, prefixCls, effectiveHeaderRowHeight, globalRef, getTooltipTheme, getTooltipPlacement, header, field, tooltipProps]);
 
   const handleMouseLeave = useCallback(() => {
     if (globalRef.current.tooltipShown) {
@@ -718,9 +729,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   )) : null;
   childNodes[childNodes.findIndex(item => item === headerNodePlaceholder)] = headerNode;
   if (!isSearchCell) {
-    const $rowHeight = headerRowHeight === undefined ? rowHeight : headerRowHeight;
-    if ($rowHeight !== 'auto') {
-      const height: number = Number(cellStyle.height) || ($rowHeight * (rowSpan || 1));
+    if (effectiveHeaderRowHeight !== 'auto') {
+      const height: number = Number(cellStyle.height) || (effectiveHeaderRowHeight * (rowSpan || 1));
       innerProps.style = {
         height: pxToRem(height),
         lineHeight: pxToRem(height - 2),

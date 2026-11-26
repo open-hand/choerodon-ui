@@ -19,6 +19,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed an issue where a non-editable single-select Select with a selected value still displayed a text caret when focused.
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where the horizontal scrollbar covered the `PerformanceTable` footer when `showScrollArrow` was enabled.
 - 🐞 `<pro>Board`: Fixed stale data after switching a Board custom table's dataSet and missing `onChange` when restoring the view with `autoQuery` disabled.
+- 🐞 `<pro>Table`: Fixed spurious overflow tooltips in Table with automatic row height, including on headers with help icons in Firefox.
 
 ## 1.6.9
 
