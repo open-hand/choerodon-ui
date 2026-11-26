@@ -197,6 +197,7 @@ export interface Locale extends DataSetLocale {
     confirm_delete: string;
     card_view_settings: string;
     kanban_view_settings: string;
+    table_view_settings: string;
     load_more: string;
     configure_display_fields: string;
     ungrouped: string;

@@ -198,6 +198,7 @@ const locale: Locale = {
     confirm_delete: '削除の確認',
     card_view_settings: 'カードビューの設定',
     kanban_view_settings: 'カンバンビューの設定',
+    table_view_settings: 'テーブルビューの設定',
     load_more: 'さらに読み込む',
     configure_display_fields: '表示するフィールドを設定してください',
     ungrouped: 'グループなし',

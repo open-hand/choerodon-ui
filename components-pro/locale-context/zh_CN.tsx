@@ -195,6 +195,7 @@ const locale: Locale = {
     confirm_delete: '确认删除',
     card_view_settings: '卡片视图配置',
     kanban_view_settings: '看板视图配置',
+    table_view_settings: '表格视图配置',
     load_more: '加载更多',
     configure_display_fields: '请配置显示字段',
     ungrouped: '未分组',
