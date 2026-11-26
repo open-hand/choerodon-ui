@@ -676,7 +676,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     const element = e.currentTarget;
-    if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) || isOverflowMaxTagCount) {
+    if ((element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && (
+      // 自动行高允许换行，只检测实际横向溢出，不估算单行文本宽度。
+      rowHeight === 'auto' ? element.clientWidth > 0 && element.scrollWidth > element.clientWidth : isOverflow(element)
+    )))) || isOverflowMaxTagCount) {
       const { current } = innerRef;
       if (text && current && current.contains(element)) {
         const getMultipleText = () => {
@@ -729,7 +732,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     return false;
-  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef, tooltipProps, configContext]);
+  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, rowHeight, multiLine, text, innerRef, tooltipProps, configContext]);
   const handleMouseEnter = useCallback((e) => {
     if (e.type === 'focus' && tooltipShownRef.current) {
       tooltipShownRef.current = false;

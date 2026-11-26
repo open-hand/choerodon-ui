@@ -3468,7 +3468,7 @@ export default class TableStore {
       key: 'TABLE_CUSTOMIZATION_MODAL',
       drawer: true,
       size: Size.small,
-      title: this.customizedBtn ? '表格视图配置' : $l('Table', 'customization_settings'),
+      title: this.customizedBtn ? $l('Board', 'table_view_settings') : $l('Table', 'customization_settings'),
       children: <CustomizationSettings context={context} />,
       bodyStyle: {
         overflow: 'hidden auto',

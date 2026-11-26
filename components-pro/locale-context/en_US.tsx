@@ -195,6 +195,7 @@ const locale: Locale = {
     confirm_delete: 'Confirm deletion',
     card_view_settings: 'Card view settings',
     kanban_view_settings: 'Kanban view settings',
+    table_view_settings: 'Table view settings',
     load_more: 'Load more',
     configure_display_fields: 'Configure which fields to display',
     ungrouped: 'Ungrouped',
